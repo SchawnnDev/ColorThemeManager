@@ -1,4 +1,4 @@
-#include "../include/Widgets/mainwindow.h"
+#include "include/Widgets/mainwindow.h"
 #include "include/colorPair.h"
 #include <QApplication>
 #include <QDebug>
