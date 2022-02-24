@@ -10,7 +10,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5 COMPONENTS Widgets Xml Gui Network Core REQUIRED)
 qt5_wrap_ui(UI_HEADERS ui/mainwindow.ui)
 
-add_executable(color_theme_manager src/main.cpp src/Widgets/mainwindow.cpp src/colorPair.cpp include/colorPair.h include/Widgets/mainwindow.h ${UI_HEADERS})
+add_executable(color_theme_manager src/main.cpp src/Widgets/mainwindow.cpp src/colorPair.cpp src/xmlReader.cpp include/xmlReader.h include/colorPair.h include/Widgets/mainwindow.h ${UI_HEADERS})
 target_link_libraries(color_theme_manager
         Qt5::Core Qt5::Network Qt5::Xml Qt5::Gui Qt5::Widgets
         )
