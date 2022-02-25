@@ -13,10 +13,10 @@ ColorPair::ColorPair(const ColorPair &color) {
     this->target_color = color.target_color;
 }
 
-ColorPair::ColorPair(const QString &id, const QColor &color1, const QColor &color2) {
+ColorPair::ColorPair(const QString &id, const QColor &source_color, const QColor &target_color) {
     this->m_id = id;
-    this->source_color = color1;
-    this->target_color = color2;
+    this->source_color = source_color;
+    this->target_color = target_color;
 }
 
 //bool ColorPair::CompareColorPair()(const ColorPair &source_color, const ColorPair &target_color) {
@@ -33,6 +33,6 @@ QColor ColorPair::fromRGBA(const QString &colorStr) {
     return {color};
 }
 
-bool ColorPair::operator()(const ColorPair &colorPair) const {
-    return get_m_id().compare(colorPair.get_m_id()) < 0;
+bool CompareColorPair::operator()(const ColorPair &colorPair1, const ColorPair &colorPair2) const {
+    return colorPair1.get_m_id().compare(colorPair2.get_m_id()) < 0;
 }

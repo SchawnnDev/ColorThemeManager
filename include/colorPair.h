@@ -8,8 +8,6 @@
 
 #include <QString>
 #include <QColor>
-#include <set>
-#include <QFile>
 
 using namespace std;
 
@@ -29,12 +27,15 @@ public:
 
     static QColor fromRGBA(const QString &colorStr);
 
-    bool operator()(const ColorPair &colorPair) const;
-
     const QString &get_m_id() const {
-        return m_id;
+        return this->m_id;
     }
 
+};
+
+class CompareColorPair {
+public:
+    bool operator()(const ColorPair &colorPair1, const ColorPair &colorPair2) const;
 };
 
 #endif //COLOR_THEME_MANAGER_COLORPAIR_H

@@ -6,13 +6,16 @@
 #define COLOR_THEME_MANAGER_XMLREADER_H
 
 #include <QtXml>
+#include <set>
+#include <QFile>
 #include "colorPair.h"
 
 class XMLReader {
 private:
-    set<ColorPair> colorPairs;
+    set<ColorPair, CompareColorPair> colorPairs;
 public:
-    void read(const QFile& file);
+    void read(const QString &path);
+    void display();
 
 };
 

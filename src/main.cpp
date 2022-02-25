@@ -1,5 +1,6 @@
 #include "include/Widgets/mainwindow.h"
 #include "include/colorPair.h"
+#include "include/xmlReader.h"
 #include <QApplication>
 #include <QDebug>
 
@@ -8,6 +9,12 @@ void test() {
     qDebug() << ColorPair::toRGBA(color);
     qDebug() << "a=" << color.alpha() << ", r=" << color.red() << ", g=" << color.green() << ", b=" << color.blue()
              << ".";
+
+
+    XMLReader reader{};
+    reader.read("/mnt/c/Users/Paul/CLionProjects/color-theme-manager/assets/xml/redTheme.xml");
+    reader.display();
+
 }
 
 int main(int argc, char *argv[]) {
