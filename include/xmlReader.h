@@ -12,7 +12,7 @@
 
 class XMLReader {
 private:
-    set<ColorPair, CompareColorPair> colorPairs;
+    std::set<ColorPair, CompareColorPair> colorPairs;
 public:
     void read(const QString &path);
     void display();

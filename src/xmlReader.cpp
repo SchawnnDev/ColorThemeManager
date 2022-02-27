@@ -20,11 +20,10 @@ void XMLReader::read(const QString &path) {
     QDomElement node = root.firstChildElement();
 
     while (!node.isNull()) {
-        const QString& m_id = node.attribute("id");
+        QString id = node.attribute("id");
         QString target_color = node.attribute("target");
         QString source_color = node.attribute("source");
-        qDebug() << m_id;
-        colorPairs.insert(ColorPair(m_id, source_color, target_color));
+        colorPairs.insert(ColorPair(id, source_color, target_color));
         // Go to next node
         node = node.nextSiblingElement();
     }
@@ -33,6 +32,6 @@ void XMLReader::read(const QString &path) {
 
 void XMLReader::display() {
     for (const ColorPair& pair: this->colorPairs) {
-        qDebug() << pair.get_m_id();
+        qDebug() << pair.id();
     }
 }
