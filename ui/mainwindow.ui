@@ -14,66 +14,84 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>130</x>
-      <y>160</y>
-      <width>83</width>
-      <height>29</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
+   <layout class="QHBoxLayout" name="horizontalLayout_6">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Thèmes ouverts</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QListView" name="openThemesList"/>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
+  <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>844</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuTest">
+   <widget class="QMenu" name="menuFichier">
     <property name="title">
-     <string>Test</string>
+     <string>Fichier</string>
     </property>
+    <addaction name="actionImportFile"/>
+    <addaction name="actionCalculateFileTheme"/>
+    <addaction name="separator"/>
    </widget>
-   <widget class="QMenu" name="menuTest_2">
+   <widget class="QMenu" name="menuTh_me">
     <property name="title">
-     <string>Test</string>
+     <string>Thème</string>
     </property>
+    <addaction name="separator"/>
+    <addaction name="actionCreateTheme"/>
+    <addaction name="actionImportThemeURL"/>
+    <addaction name="actionChargeRecentThemes"/>
+    <addaction name="actionSaveAllThemes"/>
    </widget>
-   <addaction name="menuTest"/>
-   <addaction name="menuTest_2"/>
+   <addaction name="menuFichier"/>
+   <addaction name="menuTh_me"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="toolBar">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionImportFile">
+   <property name="text">
+    <string>Importer un fichier</string>
    </property>
-   <property name="windowTitle">
-    <string>toolBar</string>
+  </action>
+  <action name="actionCalculateFileTheme">
+   <property name="text">
+    <string>Calcul thème d'un fichier</string>
    </property>
-   <property name="iconSize">
-    <size>
-     <width>32</width>
-     <height>32</height>
-    </size>
+  </action>
+  <action name="actionCreateTheme">
+   <property name="text">
+    <string>Créer un thème</string>
    </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
+  </action>
+  <action name="actionImportThemeURL">
+   <property name="text">
+    <string>Importer un thème par URL</string>
+   </property>
+  </action>
+  <action name="actionChargeRecentThemes">
+   <property name="text">
+    <string>Charger les thèmes récents</string>
+   </property>
+  </action>
+  <action name="actionSaveAllThemes">
+   <property name="text">
+    <string>Sauvegarder tous les thèmes</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

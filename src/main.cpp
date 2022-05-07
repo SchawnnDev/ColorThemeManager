@@ -12,7 +12,7 @@ void test() {
 
 
     XMLReader reader{};
-    reader.read("/mnt/c/Users/Paul/CLionProjects/color-theme-manager/assets/xml/redTheme.xml");
+    reader.read("/mnt/c/Users/ipers/CLionProjects/color-theme-manager/assets/xml/redTheme.xml");
     reader.display();
 
 }
