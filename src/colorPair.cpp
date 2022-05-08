@@ -1,7 +1,3 @@
-//
-// Created by Paul on 10/02/2022.
-//
-
 #include "../include/colorPair.h"
 
 ColorPair::ColorPair(QString id) : m_id{std::move(id)}
