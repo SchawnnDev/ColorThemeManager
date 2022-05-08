@@ -29,12 +29,14 @@ INCLUDEPATH += $${INCLUDE_DIR} $${INCLUDE_WIDGETS_DIR}
 VPATH += $${SRC_DIR} $${SRC_WIDGETS_DIR} $${INCLUDE_DIR} $${INCLUDE_WIDGETS_DIR} $${UI_DIR}
 
 SOURCES += \
+    theme.cpp \
     colorPair.cpp \
     xmlReader.cpp \
 	mainwindow.cpp \
 	main.cpp
 
 HEADERS += \
+    theme.h \
     colorPair.h \
     xmlReader.h \
 	mainwindow.h \
