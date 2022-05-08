@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "include/theme.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,5 +26,6 @@ private slots:
 
 private:
 	Ui::MainWindow *ui;
+    Themes themes;
 };
 #endif // MAINWINDOW_H
