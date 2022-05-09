@@ -25,7 +25,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QListView" name="openThemesList"/>
+       <widget class="QListWidget" name="openThemesList"/>
       </item>
      </layout>
     </item>

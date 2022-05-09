@@ -4,24 +4,44 @@
 
 #include <set>
 #include <QString>
+#include <QWidget>
+#include <QUuid>
 #include "colorPair.h"
 
 class Theme
 {
 private:
-    QString name;
-    QString iconPath;
-    QString path; // Path or URL
-    bool URL = false; // path is URL or not?
-    std::set<ColorPair, CompareColorPair> colorPairs;
+    QUuid m_uuid;
+    QString m_name;
+    QString m_iconPath;
+    QString m_path; // Path or URL
+    bool m_URL = false; // path is URL or not?
+    std::set<ColorPair, CompareColorPair> m_colorPairs;
 public:
     Theme() = default;
     Theme(const QString& name, const QString& iconPath, const QString& path, bool URL);
-    Theme(const QString& themePath);
+    explicit Theme(const QString& themePath);
 
     void applyToFile(const QString &filePath);
     void save();
 
+    // Getters and setters
+    QUuid const& uuid() const { return m_uuid; };
+    QUuid& uuid() { return m_uuid; };
+
+    QString const& name() const { return m_name; };
+    QString& name() { return m_name; };
+
+    QString const& iconPath() const { return m_iconPath; };
+    QString& iconPath() { return m_iconPath; };
+
+    QString const& path() const { return m_path; };
+    QString& path() { return m_path; };
+
+    bool const& URL() const { return m_URL; };
+    bool& URL() { return m_URL; };
+
+    std::set<ColorPair, CompareColorPair> const& colorPairs() const { return m_colorPairs; };
 
 };
 

@@ -13,8 +13,8 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 public:
-	MainWindow(QWidget *parent = nullptr);
-	~MainWindow();
+	explicit MainWindow(QWidget *parent = nullptr);
+	~MainWindow() override;
 
 private slots:
     void on_actionImportFile_triggered();
@@ -24,8 +24,10 @@ private slots:
     void on_actionChargeRecentThemes_triggered();
     void on_actionSaveAllThemes_triggered();
 
+    void onThemeClosed(const Theme& theme);
+
 private:
 	Ui::MainWindow *ui;
-    Themes themes;
+    Theme currentTheme;
 };
 #endif // MAINWINDOW_H
