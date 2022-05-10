@@ -9,6 +9,12 @@ MainWindow::MainWindow(QWidget *parent)
           ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    connect(ui->openThemesList,
+            SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)),
+            this,
+            SLOT(onCurrentItemChanged(QListWidgetItem*, QListWidgetItem*)));
+
 }
 
 MainWindow::~MainWindow()
@@ -51,7 +57,7 @@ void MainWindow::on_actionImportThemeURL_triggered()
 void MainWindow::on_actionSaveAllThemes_triggered()
 {}
 
-void MainWindow::onThemeClosed(const std::shared_ptr<Theme>& theme)
+void MainWindow::onThemeClosed(const std::shared_ptr<Theme> &theme)
 {
     qDebug() << "OnThemeClosed: " << theme->name();
 
@@ -70,5 +76,16 @@ void MainWindow::onThemeClosed(const std::shared_ptr<Theme>& theme)
     }
 }
 
+void MainWindow::onCurrentItemChanged(QListWidgetItem *current,
+                                      QListWidgetItem *previous)
+{
+    if (current == nullptr) return;
+    auto themeItem = qobject_cast<openThemeItem *>
+            (ui->openThemesList->itemWidget(current));
 
+    if (themeItem == nullptr) return;
 
+    m_currentTheme = themeItem->theme();
+
+    qDebug() << "New item selected: " << themeItem->theme()->uuid();
+}

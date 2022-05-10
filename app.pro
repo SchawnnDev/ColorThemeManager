@@ -33,6 +33,7 @@ SOURCES += \
     colorPair.cpp \
     xmlReader.cpp \
         openthemeitem.cpp \
+        themeeditor.cpp \
 	mainwindow.cpp \
 	main.cpp
 
@@ -41,11 +42,13 @@ HEADERS += \
     colorPair.h \
     xmlReader.h \
         openthemeitem.h \
+        themeeditor.h \
 	mainwindow.h \
 
 FORMS += \
         mainwindow.ui \
-        openthemeitem.ui
+        openthemeitem.ui \
+        themeeditor.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

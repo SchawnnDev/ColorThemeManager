@@ -46,6 +46,5 @@ openThemeItem::~openThemeItem()
 
 void openThemeItem::on_themeClose_clicked()
 {
-    qDebug() << "ThemeClose: " << m_theme->name();
     emit emitThemeClosed(m_theme);
 }

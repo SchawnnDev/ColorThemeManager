@@ -8,12 +8,16 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5 COMPONENTS Widgets Xml Gui Network Core REQUIRED)
-qt5_wrap_ui(UI_HEADERS ui/mainwindow.ui ui/openthemeitem.ui)
+qt5_wrap_ui(UI_HEADERS
+        ui/mainwindow.ui
+        ui/openthemeitem.ui
+        ui/themeeditor.ui)
 
 add_executable(color_theme_manager
         src/main.cpp
         src/Widgets/mainwindow.cpp
         src/Widgets/openthemeitem.cpp
+        src/Widgets/themeeditor.cpp
         src/colorPair.cpp
         src/xmlReader.cpp
         src/theme.cpp
@@ -22,6 +26,7 @@ add_executable(color_theme_manager
         include/colorPair.h
         include/Widgets/mainwindow.h
         include/Widgets/openthemeitem.h
+        include/WidgetS/themeeditor.h
         include/theme.h
 
         ${UI_HEADERS})
