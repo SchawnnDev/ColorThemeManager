@@ -9,10 +9,6 @@ MainWindow::MainWindow(QWidget *parent)
           ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
-    // init signals
-    connect(ui->openThemesList, SIGNAL(emitThemeClosed),
-            this, SLOT(onThemeClosed));
 }
 
 MainWindow::~MainWindow()
@@ -26,18 +22,19 @@ void MainWindow::on_actionImportFile_triggered()
     // test
     auto widget = ui->openThemesList;
     auto item = new QListWidgetItem(widget);
-    Theme theme{};
-    theme.iconPath() = "/mnt/c/Users/ipers/OneDrive/Images/braft.jpg";
-    theme.name() = "Theme black/red";
+    auto theme = std::make_shared<Theme>();
+    theme->iconPath() = "/mnt/c/Users/ipers/OneDrive/Images/braft.jpg";
+    theme->name() = "Theme black/red";
     auto themeItem = new openThemeItem(theme, widget);
     item->setSizeHint(themeItem->minimumSizeHint());
     widget->addItem(item);
     widget->setItemWidget(item, themeItem);
-    qDebug() << "setitemwidget";
+    qDebug() << "Create theme with uuid " << theme->uuid().toString();
+    qDebug() << "Test: " << QUuid::createUuid().toString();
 
     // Connect signals between themeItem and MainWindow
-    connect(themeItem, SIGNAL(emitThemeClosed(Theme)),
-            this, SLOT(onThemeClosed(Theme)));
+    connect(themeItem, SIGNAL(emitThemeClosed(std::shared_ptr<Theme>)),
+            this, SLOT(onThemeClosed(std::shared_ptr<Theme>)));
 }
 
 void MainWindow::on_actionCalculateFileTheme_triggered()
@@ -55,9 +52,9 @@ void MainWindow::on_actionImportThemeURL_triggered()
 void MainWindow::on_actionSaveAllThemes_triggered()
 {}
 
-void MainWindow::onThemeClosed(const Theme &theme)
+void MainWindow::onThemeClosed(const std::shared_ptr<Theme>& theme)
 {
-    qDebug() << "OnThemeClosed: " << theme.name();
+    qDebug() << "OnThemeClosed: " << theme->name();
 
     for (auto i = 0; i < ui->openThemesList->count(); ++i)
     {
@@ -65,13 +62,13 @@ void MainWindow::onThemeClosed(const Theme &theme)
         auto themeItem = qobject_cast<openThemeItem *>
                 (ui->openThemesList->itemWidget(item));
 
-        qDebug() << "Comparing " << themeItem->theme().name() << " and "
-                 << theme.name();
+        qDebug() << "Comparing " << themeItem->theme()->name() << " and "
+                 << theme->name();
 
-        if (themeItem->theme().uuid() != theme.uuid())
+        if (themeItem->theme()->uuid() != theme->uuid())
             continue;
 
-        qDebug() << "Found item";
+        qDebug() << "Deleting item " << theme->uuid().toString();
 
         delete ui->openThemesList->takeItem(ui->openThemesList->row(item));
     }

@@ -2,11 +2,11 @@
 #include "include/Widgets/openthemeitem.h"
 #include <QDebug>
 
-openThemeItem::openThemeItem(const Theme &theme, QWidget *parent) :
+openThemeItem::openThemeItem(const std::shared_ptr<Theme>& theme, QWidget *parent) :
         QWidget(parent), ui(new Ui::openThemeItem)
 {
     ui->setupUi(this);
-    ui->themeName->setText(theme.name());
+    ui->themeName->setText(theme->name());
 
     this->m_theme = theme;
 
@@ -24,10 +24,10 @@ openThemeItem::openThemeItem(const Theme &theme, QWidget *parent) :
                                                 closeBtn));
 
     // Load image
-    if (theme.iconPath().isEmpty())
+    if (theme->iconPath().isEmpty())
         return;
 
-    QPixmap image(theme.iconPath());
+    QPixmap image(theme->iconPath());
 
     if (image.isNull())
         return;
@@ -43,9 +43,8 @@ openThemeItem::~openThemeItem()
     delete ui;
 }
 
-
 void openThemeItem::on_themeClose_clicked()
 {
-    qDebug() << "ThemeClose: " << m_theme.name();
+    qDebug() << "ThemeClose: " << m_theme->name();
     emit emitThemeClosed(m_theme);
 }

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "include/theme.h"
+#include <memory>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -24,10 +25,9 @@ private slots:
     void on_actionChargeRecentThemes_triggered();
     void on_actionSaveAllThemes_triggered();
 
-    void onThemeClosed(const Theme& theme);
+    void onThemeClosed(const std::shared_ptr<Theme>& theme);
 
 private:
 	Ui::MainWindow *ui;
-    Theme currentTheme;
 };
 #endif // MAINWINDOW_H

@@ -18,10 +18,10 @@ private:
     bool m_URL = false; // path is URL or not?
     std::set<ColorPair, CompareColorPair> m_colorPairs;
 public:
-    Theme() = default;
+    Theme();
     Theme(const QString& name, const QString& iconPath, const QString& path, bool URL);
     explicit Theme(const QString& themePath);
-
+    ~Theme();
     void applyToFile(const QString &filePath);
     void save();
 
