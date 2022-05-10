@@ -30,7 +30,6 @@ void MainWindow::on_actionImportFile_triggered()
     widget->addItem(item);
     widget->setItemWidget(item, themeItem);
     qDebug() << "Create theme with uuid " << theme->uuid().toString();
-    qDebug() << "Test: " << QUuid::createUuid().toString();
 
     // Connect signals between themeItem and MainWindow
     connect(themeItem, SIGNAL(emitThemeClosed(std::shared_ptr<Theme>)),
@@ -61,9 +60,6 @@ void MainWindow::onThemeClosed(const std::shared_ptr<Theme>& theme)
         auto item = ui->openThemesList->item(i);
         auto themeItem = qobject_cast<openThemeItem *>
                 (ui->openThemesList->itemWidget(item));
-
-        qDebug() << "Comparing " << themeItem->theme()->name() << " and "
-                 << theme->name();
 
         if (themeItem->theme()->uuid() != theme->uuid())
             continue;

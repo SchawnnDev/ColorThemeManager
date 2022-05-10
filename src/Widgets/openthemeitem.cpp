@@ -1,6 +1,7 @@
 #include "ui_openthemeitem.h"
 #include "include/Widgets/openthemeitem.h"
 #include <QDebug>
+#include <QStyleOptionButton>
 
 openThemeItem::openThemeItem(const std::shared_ptr<Theme>& theme, QWidget *parent) :
         QWidget(parent), ui(new Ui::openThemeItem)
