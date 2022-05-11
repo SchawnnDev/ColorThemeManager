@@ -23,6 +23,10 @@ public:
 private:
     Ui::ThemeEditor *ui;
     std::shared_ptr<Theme> m_currentTheme;
+
+private slots:
+    void onThemeSelected(const std::shared_ptr<Theme>& theme);
+
 };
 
 

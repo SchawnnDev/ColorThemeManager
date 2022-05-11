@@ -24,3 +24,9 @@ void ThemeEditor::switchThemeDisplay()
     ui->noProjectLabel->setVisible(!display);
 }
 
+void ThemeEditor::onThemeSelected(const std::shared_ptr<Theme> &theme)
+{
+    m_currentTheme = theme;
+    switchThemeDisplay();
+}
+

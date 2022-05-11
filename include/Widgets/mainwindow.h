@@ -19,6 +19,9 @@ public:
 
     ~MainWindow() override;
 
+signals:
+    void emitThemeSelected(const std::shared_ptr<Theme>& theme);
+
 private slots:
 
     void on_actionImportFile_triggered();
@@ -39,7 +42,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    std::shared_ptr<Theme> m_currentTheme;
 };
 
 #endif // MAINWINDOW_H

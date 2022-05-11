@@ -15,6 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
             this,
             SLOT(onCurrentItemChanged(QListWidgetItem*, QListWidgetItem*)));
 
+    connect(this,
+            SIGNAL(emitThemeSelected(const std::shared_ptr<Theme>&)),
+            ui->themeEditor,
+            SLOT(onThemeSelected(const std::shared_ptr<Theme>&)));
+
 }
 
 MainWindow::~MainWindow()
@@ -85,7 +90,7 @@ void MainWindow::onCurrentItemChanged(QListWidgetItem *current,
 
     if (themeItem == nullptr) return;
 
-    m_currentTheme = themeItem->theme();
+    emitThemeSelected(themeItem->theme());
 
     qDebug() << "New item selected: " << themeItem->theme()->uuid();
 }

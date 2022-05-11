@@ -33,7 +33,7 @@
      </layout>
     </item>
     <item>
-     <widget class="ThemeEditor" name="widget" native="true"/>
+     <widget class="ThemeEditor" name="themeEditor" native="true"/>
     </item>
    </layout>
   </widget>
