@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_6">
+   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,3">
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <property name="topMargin">
@@ -120,7 +120,7 @@
   <customwidget>
    <class>ThemeEditor</class>
    <extends>QWidget</extends>
-   <header>themeeditor.h</header>
+   <header>include/Widgets/themeeditor.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
