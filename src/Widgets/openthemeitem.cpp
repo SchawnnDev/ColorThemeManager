@@ -4,12 +4,10 @@
 #include <QStyleOptionButton>
 
 openThemeItem::openThemeItem(const std::shared_ptr<Theme>& theme, QWidget *parent) :
-        QWidget(parent), ui(new Ui::openThemeItem)
+        QWidget(parent), ui{new Ui::openThemeItem}, m_theme{theme}
 {
     ui->setupUi(this);
     ui->themeName->setText(theme->name());
-
-    this->m_theme = theme;
 
     // Set close button size
     auto closeBtn = ui->themeClose;

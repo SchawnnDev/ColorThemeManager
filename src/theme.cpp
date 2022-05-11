@@ -6,15 +6,13 @@ Theme::Theme()
     this->m_uuid = QUuid::createUuid();
 }
 
-Theme::Theme(const QString& name, const QString& iconPath, const QString& path, bool URL)
+Theme::Theme(const QString &name, const QString &iconPath, const QString &path,
+             bool URL) : m_name{name}, m_iconPath{iconPath}, m_path{path},
+             m_URL{URL}
 {
-    this->m_name = name;
-    this->m_iconPath = iconPath;
-    this->m_path = path;
-    this->m_URL = URL;
 }
 
-Theme::Theme(const QString& themePath)
+Theme::Theme(const QString &themePath)
 {
 }
 

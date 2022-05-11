@@ -13,9 +13,16 @@
   <property name="windowTitle">
    <string>ThemeEditor</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_3">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,3">
+    <widget class="QLabel" name="themeEditorTitle">
+     <property name="text">
+      <string>Gestion du thème : &lt;nom&gt;</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="themeLayout" stretch="0,3">
      <item>
       <widget class="QGroupBox" name="actionsGroupBox">
        <property name="title">
@@ -77,9 +84,31 @@
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="listWidget_2"/>
+      <widget class="QListWidget" name="colorPairList"/>
      </item>
     </layout>
+   </item>
+   <item>
+    <widget class="QLabel" name="noProjectLabel">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Veuillez ouvrir et/ou séléctionner un thème à éditer.</string>
+     </property>
+     <property name="textFormat">
+      <enum>Qt::RichText</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

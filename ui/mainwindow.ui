@@ -33,24 +33,7 @@
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>Gestion du thème : &lt;nom&gt;</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="ThemeEditor" name="widget" native="true"/>
-      </item>
-     </layout>
+     <widget class="ThemeEditor" name="widget" native="true"/>
     </item>
    </layout>
   </widget>
