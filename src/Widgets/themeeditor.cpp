@@ -30,6 +30,9 @@ void ThemeEditor::switchThemeDisplay()
     ui->themeEditorTitle->setText(
             "Gestion du thème : " + m_currentTheme->name());
 
+    ui->changeThemeURLBtn->setDisabled(!m_currentTheme->URL());
+    ui->saveBtn->setDisabled(m_currentTheme->saved());
+
 }
 
 void ThemeEditor::onThemeSelected(const std::shared_ptr<Theme> &theme)
@@ -58,10 +61,13 @@ void ThemeEditor::on_changeThemeNameBtn_clicked()
     if (!ok || text.isEmpty())
         return;
 
+    if(m_currentTheme->name() == text)
+        return;
+
     m_currentTheme->name() = text;
     ui->themeEditorTitle->setText(
             "Gestion du thème : " + m_currentTheme->name());
-    emitThemeUpdated(m_currentTheme);
+    updateTheme();
 }
 
 
@@ -92,5 +98,11 @@ void ThemeEditor::on_applyToFileBtn_clicked()
 void ThemeEditor::on_saveBtn_clicked()
 {
 
+}
+
+void ThemeEditor::updateTheme()
+{
+    m_currentTheme->saved() = false;
+    emitThemeUpdated(m_currentTheme);
 }
 

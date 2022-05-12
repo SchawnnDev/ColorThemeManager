@@ -11,15 +11,17 @@
 class Theme
 {
 private:
+
     QUuid m_uuid;
     QString m_name;
     QString m_iconPath;
     QString m_path; // Path or URL
     bool m_URL = false; // path is URL or not?
+    bool m_saved = false;
     std::set<ColorPair, CompareColorPair> m_colorPairs;
 public:
     Theme();
-    Theme(const QString& name, const QString& iconPath, const QString& path, bool URL);
+    Theme(const QString& name, const QString& iconPath, const QString& path, bool URL, bool alreadyExists);
     explicit Theme(const QString& themePath);
     ~Theme();
     void applyToFile(const QString &filePath);
@@ -40,6 +42,9 @@ public:
 
     bool const& URL() const { return m_URL; };
     bool& URL() { return m_URL; };
+
+    bool const& saved() const { return m_saved; };
+    bool& saved() { return m_saved; };
 
     std::set<ColorPair, CompareColorPair> const& colorPairs() const { return m_colorPairs; };
 

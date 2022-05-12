@@ -19,6 +19,9 @@
      <property name="text">
       <string>Gestion du thème : &lt;nom&gt;</string>
      </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
     </widget>
    </item>
    <item>

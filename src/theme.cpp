@@ -4,11 +4,12 @@
 Theme::Theme()
 {
     this->m_uuid = QUuid::createUuid();
+    this->m_saved = false;
 }
 
 Theme::Theme(const QString &name, const QString &iconPath, const QString &path,
-             bool URL) : m_name{name}, m_iconPath{iconPath}, m_path{path},
-             m_URL{URL}
+             bool URL, bool alreadyExists) : m_name{name}, m_iconPath{iconPath}, m_path{path},
+             m_URL{URL}, m_saved{alreadyExists}
 {
 }
 

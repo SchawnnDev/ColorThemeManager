@@ -36,6 +36,8 @@ private slots:
     void on_addColorPairBtn_clicked();
     void on_applyToFileBtn_clicked();
     void on_saveBtn_clicked();
+
+    void updateTheme();
 };
 
 
