@@ -11,7 +11,8 @@ find_package(Qt5 COMPONENTS Widgets Xml Gui Network Core REQUIRED)
 qt5_wrap_ui(UI_HEADERS
         ui/mainwindow.ui
         ui/openthemeitem.ui
-        ui/themeeditor.ui)
+        ui/themeeditor.ui
+        ui/colorpairitem.ui)
 
 qt5_add_resources(QRC_FILES assets/resources.qrc)
 
@@ -20,6 +21,7 @@ add_executable(color_theme_manager
         src/Widgets/mainwindow.cpp
         src/Widgets/openthemeitem.cpp
         src/Widgets/themeeditor.cpp
+        src/Widgets/colorpairitem.cpp
         src/colorPair.cpp
         src/xmlReader.cpp
         src/theme.cpp
@@ -28,7 +30,8 @@ add_executable(color_theme_manager
         include/colorPair.h
         include/Widgets/mainwindow.h
         include/Widgets/openthemeitem.h
-        include/WidgetS/themeeditor.h
+        include/Widgets/themeeditor.h
+        include/Widgets/colorpairitem.h
         include/theme.h
 
         ${QRC_FILES}

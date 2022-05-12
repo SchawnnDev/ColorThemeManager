@@ -42,10 +42,9 @@ bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
         }
 
         QString fileName = QFileDialog::getSaveFileName(
-                parent, "Sauvegarder le fichier", dir.filePath("new_theme.theme"),
+                parent, "Sauvegarder le fichier",
+                dir.filePath("new_theme.theme"),
                 "Fichiers thèmes (*.theme)");
-
-        qDebug() << fileName;
 
         // Cancel => save failed
         if (fileName.isEmpty())
@@ -66,8 +65,10 @@ bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
     QFile file(m_path);
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);
-    out << m_uuid << m_name << m_URL;
+    out << m_uuid << m_name << m_iconPath << m_URL;
     file.close();
+
+    m_saved = true;
 
     return true;
 }

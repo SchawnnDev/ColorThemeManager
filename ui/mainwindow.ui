@@ -53,6 +53,7 @@
     <addaction name="actionImportFile"/>
     <addaction name="actionCalculateFileTheme"/>
     <addaction name="separator"/>
+    <addaction name="actionQuitter"/>
    </widget>
    <widget class="QMenu" name="menuTh_me">
     <property name="title">
@@ -96,6 +97,11 @@
   <action name="actionSaveAllThemes">
    <property name="text">
     <string>Sauvegarder tous les thèmes</string>
+   </property>
+  </action>
+  <action name="actionQuitter">
+   <property name="text">
+    <string>Quitter</string>
    </property>
   </action>
  </widget>

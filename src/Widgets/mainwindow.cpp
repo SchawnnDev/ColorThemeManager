@@ -3,17 +3,20 @@
 #include "include/Widgets/openthemeitem.h"
 
 #include <QDebug>
+#include <QFileDialog>
+#include <QStandardPaths>
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent),
           ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowIcon(QIcon(":/img/favicon.ico"));
 
     connect(ui->openThemesList,
-            SIGNAL(currentItemChanged(QListWidgetItem*, QListWidgetItem*)),
+            SIGNAL(currentItemChanged(QListWidgetItem * , QListWidgetItem * )),
             this,
-            SLOT(onCurrentItemChanged(QListWidgetItem*, QListWidgetItem*)));
+            SLOT(onCurrentItemChanged(QListWidgetItem * , QListWidgetItem * )));
 
     connect(this,
             SIGNAL(emitThemeSelected(const std::shared_ptr<Theme>&)),
@@ -34,18 +37,40 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_actionImportFile_triggered()
 {
-    qDebug() << "Trigger";
-    // test
+
+    QDir dir = QDir((QString)QStandardPaths::DocumentsLocation);
+    QString fileName = QFileDialog::getOpenFileName(
+            this, "Importer un thème",
+            dir.filePath("theme.theme"),
+            "Fichiers thème (*.theme)");
+
+    // TODO: info box?
+    if (fileName.isEmpty())
+        return;
+
+    QFile file(fileName);
+
+    // TODO: info box?
+    if (!file.exists())
+        return;
+
+    file.open(QIODevice::ReadOnly);
+    QDataStream in(&file);
+
+    auto theme = std::make_shared<Theme>();
+    in >> theme->uuid() >> theme->name() >> theme->iconPath() >> theme->URL();
+    // Close file
+    file.close();
+
+    theme->saved() = true;
+    theme->path() = fileName;
+
     auto widget = ui->openThemesList;
     auto item = new QListWidgetItem(widget);
-    auto theme = std::make_shared<Theme>();
-    theme->iconPath() = "/mnt/c/Users/ipers/OneDrive/Images/braft.jpg";
-    theme->name() = "Theme black/red";
     auto themeItem = new openThemeItem(theme, widget);
     item->setSizeHint(themeItem->minimumSizeHint());
     widget->addItem(item);
     widget->setItemWidget(item, themeItem);
-    qDebug() << "Create theme with uuid " << theme->uuid().toString();
 
     // Connect signals between themeItem and MainWindow
     connect(themeItem, SIGNAL(emitThemeClosed(std::shared_ptr<Theme>)),
@@ -55,6 +80,8 @@ void MainWindow::on_actionImportFile_triggered()
             SIGNAL(emitThemeUpdated(const std::shared_ptr<Theme>&)),
             themeItem,
             SLOT(onThemeUpdated(const std::shared_ptr<Theme>&)));
+
+    widget->setCurrentItem(item);
 }
 
 void MainWindow::on_actionCalculateFileTheme_triggered()
@@ -85,8 +112,7 @@ void MainWindow::on_actionCreateTheme_triggered()
             themeItem,
             SLOT(onThemeUpdated(const std::shared_ptr<Theme>&)));
 
-    emitThemeSelected(themeItem->theme());
-
+    widget->setCurrentItem(item);
 }
 
 void MainWindow::on_actionImportThemeURL_triggered()

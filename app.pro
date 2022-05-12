@@ -34,6 +34,7 @@ SOURCES += \
     xmlReader.cpp \
         openthemeitem.cpp \
         themeeditor.cpp \
+        colorpairitem.cpp \
 	mainwindow.cpp \
 	main.cpp
 
@@ -43,12 +44,14 @@ HEADERS += \
     xmlReader.h \
         openthemeitem.h \
         themeeditor.h \
+        colorpairitem.h \
 	mainwindow.h \
 
 FORMS += \
         mainwindow.ui \
         openthemeitem.ui \
-        themeeditor.ui
+        themeeditor.ui \
+        colorpair.ui
 
 RESOURCES = ./assets/resources.qrc
 

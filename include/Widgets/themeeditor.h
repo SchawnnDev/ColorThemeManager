@@ -18,7 +18,7 @@ public:
 
     ~ThemeEditor() override;
 
-    void switchThemeDisplay();
+    void updateThemeDisplay();
 
 private:
     Ui::ThemeEditor *ui;

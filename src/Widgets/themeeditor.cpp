@@ -1,6 +1,8 @@
 #include "ui_themeeditor.h"
 #include <QInputDialog>
 #include <QDir>
+#include <QFileDialog>
+#include <QStandardPaths>
 #include "include/Widgets/themeeditor.h"
 
 
@@ -8,7 +10,7 @@ ThemeEditor::ThemeEditor(QWidget *parent) :
         QWidget(parent), ui{new Ui::ThemeEditor}, m_currentTheme{}
 {
     ui->setupUi(this);
-    switchThemeDisplay();
+    updateThemeDisplay();
 }
 
 ThemeEditor::~ThemeEditor()
@@ -16,7 +18,7 @@ ThemeEditor::~ThemeEditor()
     delete ui;
 }
 
-void ThemeEditor::switchThemeDisplay()
+void ThemeEditor::updateThemeDisplay()
 {
     bool display = m_currentTheme != nullptr;
     ui->actionsGroupBox->setVisible(display);
@@ -38,7 +40,7 @@ void ThemeEditor::switchThemeDisplay()
 void ThemeEditor::onThemeSelected(const std::shared_ptr<Theme> &theme)
 {
     m_currentTheme = theme;
-    switchThemeDisplay();
+    updateThemeDisplay();
 }
 
 void ThemeEditor::onThemeClosed(const std::shared_ptr<Theme> &theme)
@@ -46,7 +48,7 @@ void ThemeEditor::onThemeClosed(const std::shared_ptr<Theme> &theme)
     if (m_currentTheme == nullptr) return;
     if (theme->uuid() != m_currentTheme->uuid()) return;
     m_currentTheme = nullptr;
-    switchThemeDisplay();
+    updateThemeDisplay();
 }
 
 
@@ -61,7 +63,7 @@ void ThemeEditor::on_changeThemeNameBtn_clicked()
     if (!ok || text.isEmpty())
         return;
 
-    if(m_currentTheme->name() == text)
+    if (m_currentTheme->name() == text)
         return;
 
     m_currentTheme->name() = text;
@@ -73,7 +75,26 @@ void ThemeEditor::on_changeThemeNameBtn_clicked()
 
 void ThemeEditor::on_changeThemeIconBtn_clicked()
 {
+    QString dirPath = m_currentTheme->iconPath();
 
+    if (dirPath.isEmpty())
+    {
+        dirPath = QStandardPaths::PicturesLocation;
+    } else
+    {
+        dirPath = QFileInfo(dirPath).absoluteDir().absolutePath();
+    }
+
+    QString fileName = QFileDialog::getOpenFileName(
+            this, "Ouvrir un fichier",
+            dirPath, "Fichiers png (*.png)");
+
+    // TODO: info box?
+    if (fileName.isEmpty())
+        return;
+
+    m_currentTheme->iconPath() = fileName;
+    updateTheme();
 }
 
 
@@ -91,18 +112,24 @@ void ThemeEditor::on_addColorPairBtn_clicked()
 
 void ThemeEditor::on_applyToFileBtn_clicked()
 {
-
 }
 
 
 void ThemeEditor::on_saveBtn_clicked()
 {
+    if (m_currentTheme == Q_NULLPTR) return;
+    ui->saveBtn->setDisabled(true);
 
+    if (m_currentTheme->save(false, this))
+        return;
+    // Save not succeed
+    ui->saveBtn->setDisabled(false);
 }
 
 void ThemeEditor::updateTheme()
 {
     m_currentTheme->saved() = false;
+    updateThemeDisplay();
     emitThemeUpdated(m_currentTheme);
 }
 
