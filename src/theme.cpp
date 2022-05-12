@@ -1,6 +1,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include "include/theme.h"
+#include <QDebug>
 
 
 Theme::Theme()
@@ -30,51 +31,47 @@ bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
     if (m_path.isEmpty() || newPath)
     {
 
-        QString dirPath;
+        QDir dir;
 
         if (m_path.isEmpty())
         {
-            dirPath = QStandardPaths::DocumentsLocation;
+            dir = QDir((QString)QStandardPaths::DocumentsLocation);
         } else
         {
-            QDir d = QFileInfo(m_path).absoluteDir();
-            dirPath = d.absolutePath();
+            dir = QFileInfo(m_path).absoluteDir();
         }
 
         QString fileName = QFileDialog::getSaveFileName(
-                parent, "Sauvegarder le fichier", dirPath,
+                parent, "Sauvegarder le fichier", dir.filePath("new_theme.theme"),
                 "Fichiers thèmes (*.theme)");
+
+        qDebug() << fileName;
 
         // Cancel => save failed
         if (fileName.isEmpty())
             return false;
+
+        if(!fileName.endsWith(".theme"))
+            fileName += ".theme";
+
+        QDir d = QFileInfo(fileName).absoluteDir();
+
+        // TODO: Maybe add info box dir not exists
+        if(!d.exists())
+            return false;
+
+        m_path = fileName;
     }
 
-    //TODO: Save theme
+    QFile file(m_path);
+    file.open(QIODevice::WriteOnly);
+    QDataStream out(&file);
+    out << m_uuid << m_name << m_URL;
+    file.close();
 
     return true;
 }
 
 Theme::~Theme()
 {
-}
-
-Themes::Themes()
-{
-
-}
-
-void Themes::addTheme(const Theme &theme)
-{
-
-}
-
-void Themes::loadAddTheme(const QString &path)
-{
-
-}
-
-bool Themes::themeExists(const Theme &theme)
-{
-    return false;
 }

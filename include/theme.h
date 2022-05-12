@@ -6,6 +6,7 @@
 #include <QString>
 #include <QWidget>
 #include <QUuid>
+#include <memory>
 #include "colorPair.h"
 
 class Theme
@@ -48,18 +49,6 @@ public:
 
     std::set<ColorPair, CompareColorPair> const& colorPairs() const { return m_colorPairs; };
 
-};
-
-class Themes
-{
-private:
-    std::set<Theme> openThemes;
-public:
-    Themes();
-
-    void addTheme(const Theme &theme);
-    void loadAddTheme(const QString& path);
-    bool themeExists(const Theme &theme);
 };
 
 #endif //COLOR_THEME_MANAGER_THEME_H
