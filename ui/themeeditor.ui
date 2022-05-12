@@ -39,42 +39,42 @@
        </property>
        <layout class="QVBoxLayout" name="actionsVerticalLayout">
         <item>
-         <widget class="QPushButton" name="pushButton_7">
+         <widget class="QPushButton" name="changeThemeNameBtn">
           <property name="text">
            <string>Changer le nom du thème</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_8">
+         <widget class="QPushButton" name="changeThemeIconBtn">
           <property name="text">
            <string>Changer l'icône du thème</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_9">
+         <widget class="QPushButton" name="changeThemeURLBtn">
           <property name="text">
            <string>Changer l'URL du thème</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_10">
+         <widget class="QPushButton" name="addColorPairBtn">
           <property name="text">
            <string>Ajouter une paire de couleurs</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_11">
+         <widget class="QPushButton" name="applyToFileBtn">
           <property name="text">
            <string>Appliquer a un fichier...</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_12">
+         <widget class="QPushButton" name="saveBtn">
           <property name="text">
            <string>Sauvegarder</string>
           </property>
@@ -100,7 +100,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Veuillez ouvrir et/ou séléctionner un thème à éditer.</string>
+      <string>Veuillez ouvrir et/ou sélectionner un thème à éditer.</string>
      </property>
      <property name="textFormat">
       <enum>Qt::RichText</enum>

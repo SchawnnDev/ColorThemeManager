@@ -21,6 +21,7 @@ public:
 
 signals:
     void emitThemeSelected(const std::shared_ptr<Theme>& theme);
+    void emitThemeClosed(const std::shared_ptr<Theme> &theme);
 
 private slots:
 

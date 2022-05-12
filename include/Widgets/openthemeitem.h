@@ -25,10 +25,13 @@ signals:
 
 private slots:
     void on_themeClose_clicked();
+    void onThemeUpdated(const std::shared_ptr<Theme> &theme);
 
 private:
     Ui::openThemeItem *ui;
     std::shared_ptr<Theme> m_theme;
+
+    void updateThemeElement();
 };
 
 

@@ -20,6 +20,11 @@ MainWindow::MainWindow(QWidget *parent)
             ui->themeEditor,
             SLOT(onThemeSelected(const std::shared_ptr<Theme>&)));
 
+    connect(this,
+            SIGNAL(emitThemeClosed(const std::shared_ptr<Theme>&)),
+            ui->themeEditor,
+            SLOT(onThemeClosed(const std::shared_ptr<Theme>&)));
+
 }
 
 MainWindow::~MainWindow()
@@ -45,6 +50,11 @@ void MainWindow::on_actionImportFile_triggered()
     // Connect signals between themeItem and MainWindow
     connect(themeItem, SIGNAL(emitThemeClosed(std::shared_ptr<Theme>)),
             this, SLOT(onThemeClosed(std::shared_ptr<Theme>)));
+
+    connect(ui->themeEditor,
+            SIGNAL(emitThemeUpdated(const std::shared_ptr<Theme>&)),
+            themeItem,
+            SLOT(onThemeUpdated(const std::shared_ptr<Theme>&)));
 }
 
 void MainWindow::on_actionCalculateFileTheme_triggered()
@@ -75,9 +85,9 @@ void MainWindow::onThemeClosed(const std::shared_ptr<Theme> &theme)
         if (themeItem->theme()->uuid() != theme->uuid())
             continue;
 
-        qDebug() << "Deleting item " << theme->uuid().toString();
-
+        emitThemeClosed(themeItem->theme());
         delete ui->openThemesList->takeItem(ui->openThemesList->row(item));
+        break;
     }
 }
 

@@ -7,7 +7,28 @@ openThemeItem::openThemeItem(const std::shared_ptr<Theme>& theme, QWidget *paren
         QWidget(parent), ui{new Ui::openThemeItem}, m_theme{theme}
 {
     ui->setupUi(this);
-    ui->themeName->setText(theme->name());
+    updateThemeElement();
+}
+
+openThemeItem::~openThemeItem()
+{
+    delete ui;
+}
+
+void openThemeItem::on_themeClose_clicked()
+{
+    emit emitThemeClosed(m_theme);
+}
+
+void openThemeItem::onThemeUpdated(const std::shared_ptr<Theme> &theme)
+{
+    if(theme->uuid() != m_theme->uuid()) return;
+    updateThemeElement();
+}
+
+void openThemeItem::updateThemeElement()
+{
+    ui->themeName->setText(m_theme->name());
 
     // Set close button size
     auto closeBtn = ui->themeClose;
@@ -23,10 +44,10 @@ openThemeItem::openThemeItem(const std::shared_ptr<Theme>& theme, QWidget *paren
                                                 closeBtn));
 
     // Load image
-    if (theme->iconPath().isEmpty())
+    if (m_theme->iconPath().isEmpty())
         return;
 
-    QPixmap image(theme->iconPath());
+    QPixmap image(m_theme->iconPath());
 
     if (image.isNull())
         return;
@@ -35,14 +56,4 @@ openThemeItem::openThemeItem(const std::shared_ptr<Theme>& theme, QWidget *paren
     int h = ui->themeIcon->height();
 
     ui->themeIcon->setPixmap(image.scaled(w, h, Qt::KeepAspectRatio));
-}
-
-openThemeItem::~openThemeItem()
-{
-    delete ui;
-}
-
-void openThemeItem::on_themeClose_clicked()
-{
-    emit emitThemeClosed(m_theme);
 }

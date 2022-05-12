@@ -1,4 +1,6 @@
 #include "ui_themeeditor.h"
+#include <QInputDialog>
+#include <QDir>
 #include "include/Widgets/themeeditor.h"
 
 
@@ -22,11 +24,73 @@ void ThemeEditor::switchThemeDisplay()
     ui->themeEditorTitle->setVisible(display);
     //
     ui->noProjectLabel->setVisible(!display);
+
+    if (!display) return;
+    // display => set new infos
+    ui->themeEditorTitle->setText(
+            "Gestion du thème : " + m_currentTheme->name());
+
 }
 
 void ThemeEditor::onThemeSelected(const std::shared_ptr<Theme> &theme)
 {
     m_currentTheme = theme;
     switchThemeDisplay();
+}
+
+void ThemeEditor::onThemeClosed(const std::shared_ptr<Theme> &theme)
+{
+    if (m_currentTheme == nullptr) return;
+    if (theme->uuid() != m_currentTheme->uuid()) return;
+    m_currentTheme = nullptr;
+    switchThemeDisplay();
+}
+
+
+void ThemeEditor::on_changeThemeNameBtn_clicked()
+{
+    if (m_currentTheme == nullptr) return;
+    bool ok;
+    QString text = QInputDialog::getText(this, tr("Editer le nom"),
+                                         tr("Nom du thème:"),
+                                         QLineEdit::Normal,
+                                         m_currentTheme->name(), &ok);
+    if (!ok || text.isEmpty())
+        return;
+
+    m_currentTheme->name() = text;
+    ui->themeEditorTitle->setText(
+            "Gestion du thème : " + m_currentTheme->name());
+    emitThemeUpdated(m_currentTheme);
+}
+
+
+void ThemeEditor::on_changeThemeIconBtn_clicked()
+{
+
+}
+
+
+void ThemeEditor::on_changeThemeURLBtn_clicked()
+{
+
+}
+
+
+void ThemeEditor::on_addColorPairBtn_clicked()
+{
+
+}
+
+
+void ThemeEditor::on_applyToFileBtn_clicked()
+{
+
+}
+
+
+void ThemeEditor::on_saveBtn_clicked()
+{
+
 }
 
