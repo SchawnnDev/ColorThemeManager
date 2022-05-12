@@ -30,7 +30,7 @@ void ThemeEditor::switchThemeDisplay()
     ui->themeEditorTitle->setText(
             "Gestion du thème : " + m_currentTheme->name());
 
-    ui->changeThemeURLBtn->setDisabled(!m_currentTheme->URL());
+    ui->changeThemeURLBtn->setDisabled(m_currentTheme->URL().isEmpty());
     ui->saveBtn->setDisabled(m_currentTheme->saved());
 
 }

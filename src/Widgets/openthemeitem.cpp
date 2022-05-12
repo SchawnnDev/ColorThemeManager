@@ -2,8 +2,10 @@
 #include "include/Widgets/openthemeitem.h"
 #include <QDebug>
 #include <QStyleOptionButton>
+#include <QMessageBox>
 
-openThemeItem::openThemeItem(const std::shared_ptr<Theme>& theme, QWidget *parent) :
+openThemeItem::openThemeItem(const std::shared_ptr<Theme> &theme,
+                             QWidget *parent) :
         QWidget(parent), ui{new Ui::openThemeItem}, m_theme{theme}
 {
     ui->setupUi(this);
@@ -17,12 +19,37 @@ openThemeItem::~openThemeItem()
 
 void openThemeItem::on_themeClose_clicked()
 {
+
+    if (!m_theme->saved())
+    {
+        QMessageBox msgBox(QMessageBox::NoIcon, "Sauvegarder et quitter",
+                           "Etes-vous sûr de vouloir fermer ce thème sans le sauvegarder?",
+                           QMessageBox::Save | QMessageBox::Discard |
+                           QMessageBox::Cancel,
+                           this);
+        int ret = msgBox.exec();
+
+        switch (ret)
+        {
+            case QMessageBox::Save:
+                if(!m_theme->save(false, this))
+                    return;
+                break;
+            case QMessageBox::Discard:
+                break;
+            default:
+                // Should never be reached
+                return;
+        }
+
+    }
+
     emit emitThemeClosed(m_theme);
 }
 
 void openThemeItem::onThemeUpdated(const std::shared_ptr<Theme> &theme)
 {
-    if(theme->uuid() != m_theme->uuid()) return;
+    if (theme->uuid() != m_theme->uuid()) return;
     updateThemeElement();
 }
 
@@ -33,7 +60,7 @@ void openThemeItem::updateThemeElement()
     // Set close button size
     auto closeBtn = ui->themeClose;
     auto textSize = closeBtn->fontMetrics().size(Qt::TextShowMnemonic,
-                                                 closeBtn->text())  * 2;
+                                                 closeBtn->text()) * 2;
     QStyleOptionButton opt;
     opt.initFrom(ui->themeClose);
     opt.rect.setSize(textSize);

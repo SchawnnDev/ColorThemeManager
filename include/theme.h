@@ -15,8 +15,8 @@ private:
     QUuid m_uuid;
     QString m_name;
     QString m_iconPath;
-    QString m_path; // Path or URL
-    bool m_URL = false; // path is URL or not?
+    QString m_path; // Path
+    QString m_URL;// if URL is empty => no URL
     bool m_saved = false;
     std::set<ColorPair, CompareColorPair> m_colorPairs;
 public:
@@ -25,7 +25,7 @@ public:
     explicit Theme(const QString& themePath);
     ~Theme();
     void applyToFile(const QString &filePath);
-    void save();
+    bool save(bool newPath, QWidget *parent);
 
     // Getters and setters
     QUuid const& uuid() const { return m_uuid; };
@@ -40,8 +40,8 @@ public:
     QString const& path() const { return m_path; };
     QString& path() { return m_path; };
 
-    bool const& URL() const { return m_URL; };
-    bool& URL() { return m_URL; };
+    QString const& URL() const { return m_URL; };
+    QString& URL() { return m_URL; };
 
     bool const& saved() const { return m_saved; };
     bool& saved() { return m_saved; };

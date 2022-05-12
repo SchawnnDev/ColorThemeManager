@@ -64,7 +64,30 @@ void MainWindow::on_actionChargeRecentThemes_triggered()
 {}
 
 void MainWindow::on_actionCreateTheme_triggered()
-{}
+{
+    // test
+    auto widget = ui->openThemesList;
+    auto item = new QListWidgetItem(widget);
+    auto theme = std::make_shared<Theme>();
+    theme->iconPath() = ":/img/new.png";
+    theme->name() = "Nouveau thème";
+    auto themeItem = new openThemeItem(theme, widget);
+    item->setSizeHint(themeItem->minimumSizeHint());
+    widget->addItem(item);
+    widget->setItemWidget(item, themeItem);
+
+    // Connect signals between themeItem and MainWindow
+    connect(themeItem, SIGNAL(emitThemeClosed(std::shared_ptr<Theme>)),
+            this, SLOT(onThemeClosed(std::shared_ptr<Theme>)));
+
+    connect(ui->themeEditor,
+            SIGNAL(emitThemeUpdated(const std::shared_ptr<Theme>&)),
+            themeItem,
+            SLOT(onThemeUpdated(const std::shared_ptr<Theme>&)));
+
+    emitThemeSelected(themeItem->theme());
+
+}
 
 void MainWindow::on_actionImportThemeURL_triggered()
 {}

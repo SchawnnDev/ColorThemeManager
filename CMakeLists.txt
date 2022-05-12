@@ -13,6 +13,8 @@ qt5_wrap_ui(UI_HEADERS
         ui/openthemeitem.ui
         ui/themeeditor.ui)
 
+qt5_add_resources(QRC_FILES assets/resources.qrc)
+
 add_executable(color_theme_manager
         src/main.cpp
         src/Widgets/mainwindow.cpp
@@ -28,6 +30,8 @@ add_executable(color_theme_manager
         include/Widgets/openthemeitem.h
         include/WidgetS/themeeditor.h
         include/theme.h
+
+        ${QRC_FILES}
 
         ${UI_HEADERS})
 
