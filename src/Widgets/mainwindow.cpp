@@ -58,7 +58,7 @@ void MainWindow::on_actionImportFile_triggered()
     QDataStream in(&file);
 
     auto theme = std::make_shared<Theme>();
-    in >> theme->uuid() >> theme->name() >> theme->iconPath() >> theme->URL();
+    in >> theme->uuid() >> theme->name() >> theme->iconPath() >> theme->URL() >> theme->colorPairs();
     // Close file
     file.close();
 
