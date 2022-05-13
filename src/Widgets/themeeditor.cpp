@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include "include/Widgets/themeeditor.h"
+#include "include/Widgets/colorpairitem.h"
 
 
 ThemeEditor::ThemeEditor(QWidget *parent) :
@@ -106,7 +107,18 @@ void ThemeEditor::on_changeThemeURLBtn_clicked()
 
 void ThemeEditor::on_addColorPairBtn_clicked()
 {
-
+    auto widget = ui->colorPairList;
+    auto item = new QListWidgetItem(widget);
+    auto colorPair = std::make_shared<ColorPair>();
+    colorPair->id() = "#1";
+    colorPair->sourceColor() = QColor(24, 163, 200);
+    colorPair->targetColor() = QColor(100, 25, 95);
+    auto themeItem = new ColorPairItem(colorPair, widget);
+    item->setSizeHint(themeItem->minimumSizeHint());
+    widget->addItem(item);
+    widget->setItemWidget(item, themeItem);
+    widget->setCurrentItem(item);
+    //ui->colorPairList->addItem()
 }
 
 

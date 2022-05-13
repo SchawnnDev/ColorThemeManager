@@ -12,7 +12,6 @@
 class Theme
 {
 private:
-
     QUuid m_uuid;
     QString m_name;
     QString m_iconPath;

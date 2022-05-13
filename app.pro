@@ -51,7 +51,7 @@ FORMS += \
         mainwindow.ui \
         openthemeitem.ui \
         themeeditor.ui \
-        colorpair.ui
+        colorpairitem.ui
 
 RESOURCES = ./assets/resources.qrc
 

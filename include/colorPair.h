@@ -17,7 +17,7 @@ private:
 public:
     ColorPair() = default; //constructeur vide
     ColorPair(QString id, QColor source_color, QColor target_color);
-    ColorPair(QString id); //con. initialisant uniquement l'identifiant
+    explicit ColorPair(QString id); //con. initialisant uniquement l'identifiant
 
     static QString toRGBA(const QColor &color);
 
@@ -26,6 +26,11 @@ public:
     QString const& id() const { return m_id; };
     QString& id() { return m_id; };
 
+    QColor const& sourceColor() const { return m_source_color; }
+    QColor& sourceColor() { return m_source_color;}
+
+    QColor const& targetColor() const { return m_target_color; }
+    QColor& targetColor() { return m_target_color; }
 };
 
 class CompareColorPair {
