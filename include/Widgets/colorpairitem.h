@@ -5,6 +5,7 @@
 #include <memory>
 #include <QGraphicsScene>
 #include "include/colorPair.h"
+#include "include/theme.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -20,6 +21,8 @@ public:
 
     ~ColorPairItem() override;
 
+    std::shared_ptr<ColorPair> const& colorPair() const { return m_colorPair; }
+
 private slots:
     void on_sourceColor_clicked();
 
@@ -30,6 +33,10 @@ private slots:
     void on_sourceColorHex_textEdited(const QString &newColor);
 
     void on_targetColorHex_textEdited(const QString &newColor);
+
+signals:
+    void emitColorPairUpdated();
+    void emitColorPairRemoved(const std::shared_ptr<ColorPair>& colorPair);
 
 private:
     Ui::ColorPairItem *ui;

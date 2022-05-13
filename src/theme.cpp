@@ -65,7 +65,7 @@ bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
     QFile file(m_path);
     file.open(QIODevice::WriteOnly);
     QDataStream out(&file);
-    out << m_uuid << m_name << m_iconPath << m_URL;
+    out << m_uuid << m_name << m_iconPath << m_URL << m_colorPairs;
     file.close();
 
     m_saved = true;

@@ -28,3 +28,14 @@ QColor ColorPair::fromRGBA(const QString &colorStr) {
 bool CompareColorPair::operator()(const ColorPair &colorPair1, const ColorPair &colorPair2) const {
     return colorPair1.id().compare(colorPair2.id()) < 0;
 }
+
+QDataStream& operator<<(QDataStream &out, const std::shared_ptr<ColorPair> &colorPair) {
+    out << colorPair->id() << colorPair->sourceColor() << colorPair->targetColor();
+    return out;
+}
+
+QDataStream &operator>>(QDataStream &in, std::shared_ptr<ColorPair> &colorPair) {
+    colorPair = std::make_shared<ColorPair>();
+    in >> colorPair->id() >> colorPair->sourceColor() >> colorPair->targetColor();
+    return in;
+}

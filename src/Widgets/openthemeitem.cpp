@@ -38,7 +38,6 @@ void openThemeItem::on_themeClose_clicked()
             case QMessageBox::Discard:
                 break;
             default:
-                // Should never be reached
                 return;
         }
 

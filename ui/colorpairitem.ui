@@ -47,10 +47,10 @@
      <item>
       <widget class="QLineEdit" name="sourceColorHex">
        <property name="inputMask">
-        <string>\#&gt;HHHHHHHH;F</string>
+        <string>\#&gt;HHHHHHHH</string>
        </property>
        <property name="text">
-        <string>#</string>
+        <string>#FFFFFFFF</string>
        </property>
        <property name="maxLength">
         <number>9</number>
@@ -81,7 +81,7 @@
      <item>
       <widget class="QLineEdit" name="targetColorHex">
        <property name="inputMask">
-        <string>\#&gt;HHHHHHHH;F</string>
+        <string>\#&gt;HHHHHHHH</string>
        </property>
        <property name="maxLength">
         <number>9</number>

@@ -36,8 +36,9 @@ private slots:
     void on_addColorPairBtn_clicked();
     void on_applyToFileBtn_clicked();
     void on_saveBtn_clicked();
-
     void updateTheme();
+    void onColorPairRemoved(const std::shared_ptr<ColorPair> &colorPair);
+    void on_importColorPairsBtn_clicked();
 };
 
 

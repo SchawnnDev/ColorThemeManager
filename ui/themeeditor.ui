@@ -70,6 +70,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="importColorPairsBtn">
+          <property name="text">
+           <string>Importer des paires de couleurs...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="applyToFileBtn">
           <property name="text">
            <string>Appliquer a un fichier...</string>
@@ -87,7 +94,11 @@
       </widget>
      </item>
      <item>
-      <widget class="QListWidget" name="colorPairList"/>
+      <widget class="QListWidget" name="colorPairList">
+       <property name="selectionMode">
+        <enum>QAbstractItemView::NoSelection</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

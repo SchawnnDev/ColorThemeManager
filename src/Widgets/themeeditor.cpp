@@ -111,14 +111,23 @@ void ThemeEditor::on_addColorPairBtn_clicked()
     auto item = new QListWidgetItem(widget);
     auto colorPair = std::make_shared<ColorPair>();
     colorPair->id() = "#1";
-    colorPair->sourceColor() = QColor(24, 163, 200);
-    colorPair->targetColor() = QColor(100, 25, 95);
+    colorPair->sourceColor() = QColor(0, 0, 0);
+    colorPair->targetColor() = QColor(0, 0, 0);
+    m_currentTheme->colorPairs().insert(colorPair);
     auto themeItem = new ColorPairItem(colorPair, widget);
     item->setSizeHint(themeItem->minimumSizeHint());
     widget->addItem(item);
     widget->setItemWidget(item, themeItem);
-    widget->setCurrentItem(item);
-    //ui->colorPairList->addItem()
+
+    connect(themeItem, SIGNAL(emitColorPairUpdated()),
+            this, SLOT(updateTheme()));
+
+    connect(themeItem,
+            SIGNAL(emitColorPairRemoved(const std::shared_ptr<ColorPair> &)),
+            this,
+            SLOT(onColorPairRemoved(const std::shared_ptr<ColorPair> &)));
+
+    updateTheme();
 }
 
 
@@ -138,10 +147,36 @@ void ThemeEditor::on_saveBtn_clicked()
     ui->saveBtn->setDisabled(false);
 }
 
+void
+ThemeEditor::onColorPairRemoved(const std::shared_ptr<ColorPair> &colorPair)
+{
+    for (auto i = 0; i < ui->colorPairList->count(); ++i)
+    {
+        auto item = ui->colorPairList->item(i);
+        auto themeItem = qobject_cast<ColorPairItem *>
+                (ui->colorPairList->itemWidget(item));
+
+        if (themeItem->colorPair()->id() != colorPair->id())
+            continue;
+
+        m_currentTheme->colorPairs().remove(themeItem->colorPair());
+        delete ui->colorPairList->takeItem(ui->colorPairList->row(item));
+        updateTheme();
+        break;
+    }
+}
+
 void ThemeEditor::updateTheme()
 {
     m_currentTheme->saved() = false;
     updateThemeDisplay();
     emitThemeUpdated(m_currentTheme);
+}
+
+
+
+void ThemeEditor::on_importColorPairsBtn_clicked()
+{
+
 }
 
