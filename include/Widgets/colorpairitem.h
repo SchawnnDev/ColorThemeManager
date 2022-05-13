@@ -34,6 +34,8 @@ private slots:
 
     void on_targetColorHex_textEdited(const QString &newColor);
 
+    void on_colorPairName_textEdited(const QString &newName);
+
 signals:
     void emitColorPairUpdated();
     void emitColorPairRemoved(const std::shared_ptr<ColorPair>& colorPair);

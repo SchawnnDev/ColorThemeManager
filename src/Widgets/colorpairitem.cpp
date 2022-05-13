@@ -119,3 +119,12 @@ void ColorPairItem::on_targetColorHex_textEdited(const QString &newColor)
     updateColorPair();
 }
 
+
+void ColorPairItem::on_colorPairName_textEdited(const QString &newName)
+{
+    if (newName.length() < 3) return;
+    m_colorPair->name() = newName;
+    updateColorPairDisplay(false);
+    updateColorPair();
+}
+
