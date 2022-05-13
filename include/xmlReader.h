@@ -1,7 +1,3 @@
-//
-// Created by Paul on 24/02/2022.
-//
-
 #ifndef COLOR_THEME_MANAGER_XMLREADER_H
 #define COLOR_THEME_MANAGER_XMLREADER_H
 
@@ -9,14 +5,11 @@
 #include <set>
 #include <QFile>
 #include "colorPair.h"
+#include "theme.h"
 
 class XMLReader {
-private:
-    std::set<ColorPair, CompareColorPair> colorPairs;
 public:
-    void read(const QString &path);
-    void display();
-
+    static void import(const std::shared_ptr<Theme>& theme, const QString &path);
 };
 
 #endif //COLOR_THEME_MANAGER_XMLREADER_H

@@ -18,7 +18,7 @@ private:
     QString m_path; // Path
     QString m_URL;// if URL is empty => no URL
     bool m_saved = false;
-    QSet<std::shared_ptr<ColorPair>> m_colorPairs;
+    QList<std::shared_ptr<ColorPair>> m_colorPairs;
 public:
     Theme();
     Theme(const QString& name, const QString& iconPath, const QString& path, bool URL, bool alreadyExists);
@@ -46,8 +46,8 @@ public:
     bool const& saved() const { return m_saved; };
     bool& saved() { return m_saved; };
 
-    QSet<std::shared_ptr<ColorPair>> const& colorPairs() const { return m_colorPairs; };
-    QSet<std::shared_ptr<ColorPair>>& colorPairs() { return m_colorPairs; };
+    QList<std::shared_ptr<ColorPair>> const& colorPairs() const { return m_colorPairs; };
+    QList<std::shared_ptr<ColorPair>>& colorPairs() { return m_colorPairs; };
 
 };
 

@@ -24,6 +24,8 @@ private:
     Ui::ThemeEditor *ui;
     std::shared_ptr<Theme> m_currentTheme;
 
+    void addColorPairItem(const std::shared_ptr<ColorPair> &colorPair);
+
 signals:
     void emitThemeUpdated(const std::shared_ptr<Theme> &theme);
 
@@ -39,6 +41,7 @@ private slots:
     void updateTheme();
     void onColorPairRemoved(const std::shared_ptr<ColorPair> &colorPair);
     void on_importColorPairsBtn_clicked();
+
 };
 
 

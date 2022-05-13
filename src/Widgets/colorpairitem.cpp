@@ -24,7 +24,7 @@ ColorPairItem::~ColorPairItem()
 
 void ColorPairItem::updateColorPairDisplay(bool updateHexText)
 {
-    ui->colorPairId->setText(m_colorPair->id());
+    ui->colorPairName->setText(m_colorPair->name());
     //$
     auto sourceColor = m_colorPair->sourceColor();
     auto targetColor = m_colorPair->targetColor();

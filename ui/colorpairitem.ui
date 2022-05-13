@@ -19,7 +19,28 @@
      <item>
       <widget class="QLabel" name="colorPairId">
        <property name="text">
-        <string>&lt;id&gt;</string>
+        <string>•</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>NOM</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="colorPairName">
+       <property name="maxLength">
+        <number>16</number>
        </property>
       </widget>
      </item>

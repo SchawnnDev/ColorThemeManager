@@ -1,14 +1,12 @@
-//
-// Created by Paul on 24/02/2022.
-//
-
 #include "include/xmlReader.h"
 
-void XMLReader::read(const QString &path) {
+void XMLReader::import(const std::shared_ptr<Theme> &theme, const QString &path)
+{
     QDomDocument doc;
     QFile xmlFile(path);
 
-    if (!xmlFile.open(QIODevice::ReadOnly)) {
+    if (!xmlFile.open(QIODevice::ReadOnly))
+    {
         qDebug() << "erreur";
         return;
     }
@@ -19,19 +17,16 @@ void XMLReader::read(const QString &path) {
     QDomElement root = doc.documentElement();
     QDomElement node = root.firstChildElement();
 
-    while (!node.isNull()) {
-        QString id = node.attribute("id");
-        QString target_color = node.attribute("target");
-        QString source_color = node.attribute("source");
-        colorPairs.insert(ColorPair(id, source_color, target_color));
+    while (!node.isNull())
+    {
+        auto colorPair = std::make_shared<ColorPair>();
+        colorPair->name() = node.attribute("id");
+        colorPair->targetColor() = ColorPair::fromRGBA(node.attribute("target"));
+        colorPair->sourceColor() = ColorPair::fromRGBA(node.attribute("source"));
+
+        theme->colorPairs().push_back(colorPair);
         // Go to next node
         node = node.nextSiblingElement();
     }
 
-}
-
-void XMLReader::display() {
-    for (const ColorPair& pair: this->colorPairs) {
-        qDebug() << pair.id();
-    }
 }

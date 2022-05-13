@@ -5,7 +5,8 @@
 #include <QStandardPaths>
 #include "include/Widgets/themeeditor.h"
 #include "include/Widgets/colorpairitem.h"
-
+#include "include/xmlReader.h"
+#include <QDebug>
 
 ThemeEditor::ThemeEditor(QWidget *parent) :
         QWidget(parent), ui{new Ui::ThemeEditor}, m_currentTheme{}
@@ -35,12 +36,26 @@ void ThemeEditor::updateThemeDisplay()
 
     ui->changeThemeURLBtn->setDisabled(m_currentTheme->URL().isEmpty());
     ui->saveBtn->setDisabled(m_currentTheme->saved());
-
 }
 
 void ThemeEditor::onThemeSelected(const std::shared_ptr<Theme> &theme)
 {
     m_currentTheme = theme;
+
+    const int count = ui->colorPairList->count();
+
+    for (int i = 0; i < count; ++i)
+    {
+        auto item = ui->colorPairList->item(0);
+        delete ui->colorPairList->takeItem(ui->colorPairList->row(item));
+    }
+
+    foreach(const std::shared_ptr<ColorPair> &colorPair,
+                theme->colorPairs())
+    {
+        addColorPairItem(colorPair);
+    }
+
     updateThemeDisplay();
 }
 
@@ -107,13 +122,20 @@ void ThemeEditor::on_changeThemeURLBtn_clicked()
 
 void ThemeEditor::on_addColorPairBtn_clicked()
 {
+    auto colorPair = std::make_shared<ColorPair>();
+    colorPair->name() = "Nouvelle couleur";
+    colorPair->sourceColor() = QColor(0, 0, 0, 255);
+    colorPair->targetColor() = QColor(0, 0, 0, 255);
+
+    m_currentTheme->colorPairs().push_back(colorPair);
+
+    addColorPairItem(colorPair);
+}
+
+void ThemeEditor::addColorPairItem(const std::shared_ptr<ColorPair> &colorPair)
+{
     auto widget = ui->colorPairList;
     auto item = new QListWidgetItem(widget);
-    auto colorPair = std::make_shared<ColorPair>();
-    colorPair->id() = "#1";
-    colorPair->sourceColor() = QColor(0, 0, 0);
-    colorPair->targetColor() = QColor(0, 0, 0);
-    m_currentTheme->colorPairs().insert(colorPair);
     auto themeItem = new ColorPairItem(colorPair, widget);
     item->setSizeHint(themeItem->minimumSizeHint());
     widget->addItem(item);
@@ -159,7 +181,7 @@ ThemeEditor::onColorPairRemoved(const std::shared_ptr<ColorPair> &colorPair)
         if (themeItem->colorPair()->id() != colorPair->id())
             continue;
 
-        m_currentTheme->colorPairs().remove(themeItem->colorPair());
+        m_currentTheme->colorPairs().removeOne(themeItem->colorPair());
         delete ui->colorPairList->takeItem(ui->colorPairList->row(item));
         updateTheme();
         break;
@@ -174,9 +196,25 @@ void ThemeEditor::updateTheme()
 }
 
 
-
 void ThemeEditor::on_importColorPairsBtn_clicked()
 {
+    QString dirPath = QFileInfo((QString)
+            QStandardPaths::DocumentsLocation)
+                    .absoluteDir().absolutePath();
 
+    QString fileName = QFileDialog::getOpenFileName(
+            this, "Importer des paires de couleurs",
+            dirPath, "Fichiers xml (*.xml)");
+
+    // TODO: info box?
+    if (fileName.isEmpty())
+        return;
+
+    XMLReader::import(m_currentTheme, fileName);
+
+    // Reload colorPairs
+    onThemeSelected(m_currentTheme);
+
+    updateTheme();
 }
 
