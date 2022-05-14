@@ -9,7 +9,9 @@
 
 class XMLReader {
 public:
-    static void import(const std::shared_ptr<Theme>& theme, const QString &path);
+    static void importFile(const std::shared_ptr<Theme>& theme, const QString &path);
+
+    static void import(const std::shared_ptr<Theme> &theme, const QDomDocument &doc);
 };
 
 #endif //COLOR_THEME_MANAGER_XMLREADER_H

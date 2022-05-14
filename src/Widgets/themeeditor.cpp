@@ -124,6 +124,32 @@ void ThemeEditor::on_addColorPairBtn_clicked()
     addColorPairItem(colorPair);
 }
 
+void ThemeEditor::on_importColorPairsURLBtn_clicked()
+{
+    if (m_currentTheme == nullptr) return;
+    bool ok;
+    QString url = QInputDialog::getText(this, tr("Importer des paires de couleur par URL"),
+                                         tr("URL:"),
+                                         QLineEdit::Normal,
+                                         m_currentTheme->URL(), &ok);
+    //TODO: error msg box
+    if (!ok || url.isEmpty())
+        return;
+
+    QUrl xmlUrl(url);
+
+    if(!xmlUrl.isValid())
+        return;
+
+    m_currentTheme->URL() = url;
+
+    delete m_fileDownloader;
+
+    m_fileDownloader = new FileDownloader(xmlUrl, this);
+    qDebug() << "m_fileDownloader";
+    connect(m_fileDownloader, SIGNAL (downloaded()), this, SLOT (onURLDownloaded()));
+}
+
 void ThemeEditor::addColorPairItem(const std::shared_ptr<ColorPair> &colorPair)
 {
     auto widget = ui->colorPairList;
@@ -237,10 +263,45 @@ void ThemeEditor::on_importColorPairsBtn_clicked()
     if (fileName.isEmpty())
         return;
 
-    XMLReader::import(m_currentTheme, fileName);
+    XMLReader::importFile(m_currentTheme, fileName);
 
     // Reload colorPairs
     onThemeSelected(m_currentTheme);
+
+    updateTheme();
+}
+
+void ThemeEditor::onURLDownloaded() {
+    if(m_currentTheme == Q_NULLPTR) return;
+    auto data = m_fileDownloader->downloadedData();
+
+    if(data.isEmpty())
+        return;
+
+    QDomDocument doc;
+
+    // TODO: error box?
+    if(!doc.setContent(QString(data).trimmed()))
+    {
+        qWarning() << "Failed to parse XML";
+        return;
+    }
+
+    XMLReader::import(m_currentTheme, doc);
+
+    const int count = ui->colorPairList->count();
+
+    for (int i = 0; i < count; ++i)
+    {
+        auto item = ui->colorPairList->item(0);
+        delete ui->colorPairList->takeItem(ui->colorPairList->row(item));
+    }
+
+    foreach(const std::shared_ptr<ColorPair> &colorPair,
+                m_currentTheme->colorPairs())
+    {
+        addColorPairItem(colorPair);
+    }
 
     updateTheme();
 }

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "include/theme.h"
+#include "include/filedownloader.h"
 #include <memory>
 
 QT_BEGIN_NAMESPACE
@@ -23,6 +24,7 @@ public:
 private:
     Ui::ThemeEditor *ui;
     std::shared_ptr<Theme> m_currentTheme;
+    FileDownloader* m_fileDownloader;
 
     void addColorPairItem(const std::shared_ptr<ColorPair> &colorPair);
 
@@ -41,6 +43,8 @@ private slots:
     void updateTheme();
     void onColorPairRemoved(const std::shared_ptr<ColorPair> &colorPair);
     void on_importColorPairsBtn_clicked();
+    void on_importColorPairsURLBtn_clicked();
+    void onURLDownloaded();
 
 };
 

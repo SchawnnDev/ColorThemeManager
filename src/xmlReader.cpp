@@ -1,6 +1,6 @@
 #include "include/xmlReader.h"
 
-void XMLReader::import(const std::shared_ptr<Theme> &theme, const QString &path)
+void XMLReader::importFile(const std::shared_ptr<Theme> &theme, const QString &path)
 {
     QDomDocument doc;
     QFile xmlFile(path);
@@ -14,6 +14,12 @@ void XMLReader::import(const std::shared_ptr<Theme> &theme, const QString &path)
     doc.setContent(&xmlFile);
     xmlFile.close();
 
+    import(theme, doc);
+
+}
+
+void XMLReader::import(const std::shared_ptr<Theme> &theme, const QDomDocument &doc)
+{
     QDomElement root = doc.documentElement();
     QDomElement node = root.firstChildElement();
 
@@ -28,5 +34,4 @@ void XMLReader::import(const std::shared_ptr<Theme> &theme, const QString &path)
         // Go to next node
         node = node.nextSiblingElement();
     }
-
 }
