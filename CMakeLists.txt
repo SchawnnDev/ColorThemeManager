@@ -35,6 +35,7 @@ add_executable(color_theme_manager
         include/Widgets/colorpairitem.h
         include/theme.h
         include/filedownloader.h
+        include/utils.h
 
         ${QRC_FILES}
 

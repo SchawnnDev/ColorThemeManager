@@ -1,6 +1,7 @@
 #include <QFileDialog>
 #include <QStandardPaths>
 #include "include/theme.h"
+#include "include/utils.h"
 #include <QDebug>
 
 
@@ -50,7 +51,10 @@ bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
 
         // Cancel => save failed
         if (fileName.isEmpty())
+        {
+            Utils::displayError(QWidget::tr("Le fichier sélectionné n'existe pas"), parent);
             return false;
+        }
 
         if(!fileName.endsWith(".theme"))
             fileName += ".theme";
@@ -59,7 +63,10 @@ bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
 
         // TODO: Maybe add info box dir not exists
         if(!d.exists())
+        {
+            Utils::displayError(QWidget::tr("Le dossier selectionné n'existe pas"), parent);
             return false;
+        }
 
         m_path = fileName;
     }

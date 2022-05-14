@@ -40,6 +40,7 @@ SOURCES += \
 	main.cpp
 
 HEADERS += \
+    utils.h \
     filedownloader.h \
     theme.h \
     colorPair.h \
