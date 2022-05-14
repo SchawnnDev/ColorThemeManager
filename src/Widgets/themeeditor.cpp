@@ -148,12 +148,14 @@ void ThemeEditor::addColorPairItem(const std::shared_ptr<ColorPair> &colorPair)
 void ThemeEditor::on_applyToFileBtn_clicked()
 {
     QString fileName = QFileDialog::getOpenFileName(
-            this, "Ouvrir un fichier a convertir",
+            this, tr("Ouvrir un fichier a convertir"),
             (QString) QStandardPaths::DocumentsLocation);
 
     // TODO: info box?
     if (fileName.isEmpty())
         return;
+
+    emit emitStatusBarUpdate(tr("Application du thème au fichier..."));
 
     QFile file(fileName);
     file.open(QIODevice::ReadWrite);
@@ -162,14 +164,14 @@ void ThemeEditor::on_applyToFileBtn_clicked()
 
     int found = 0;
 
-            foreach(const std::shared_ptr<ColorPair> &colorPair,
-                    m_currentTheme->colorPairs())
-        {
-            QString source = ColorPair::toRGBA(colorPair->sourceColor());
-            QString target = ColorPair::toRGBA(colorPair->targetColor());
-            found += contentStr.count(source, Qt::CaseInsensitive);
-            contentStr.replace(source, target, Qt::CaseInsensitive);
-        }
+    foreach(const std::shared_ptr<ColorPair> &colorPair,
+            m_currentTheme->colorPairs())
+    {
+        QString source = ColorPair::toRGBA(colorPair->sourceColor());
+        QString target = ColorPair::toRGBA(colorPair->targetColor());
+        found += contentStr.count(source, Qt::CaseInsensitive);
+        contentStr.replace(source, target, Qt::CaseInsensitive);
+    }
 
     file.seek(0);
     file.write(contentStr.toUtf8());
@@ -178,6 +180,8 @@ void ThemeEditor::on_applyToFileBtn_clicked()
     QMessageBox::information(this, "Success!",
                              QString("Le thème a bien été appliqué au fichier " +
                              fileName + ".\n%1 couleurs ont été remplacées.").arg(found));
+    emit emitStatusBarUpdate(QString("%1 " + tr("couleurs ont été remplacées.")).arg(found));
+
 }
 
 

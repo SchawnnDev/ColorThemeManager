@@ -29,6 +29,7 @@ INCLUDEPATH += $${INCLUDE_DIR} $${INCLUDE_WIDGETS_DIR}
 VPATH += $${SRC_DIR} $${SRC_WIDGETS_DIR} $${INCLUDE_DIR} $${INCLUDE_WIDGETS_DIR} $${UI_DIR}
 
 SOURCES += \
+    filedownloader.cpp \
     theme.cpp \
     colorPair.cpp \
     xmlReader.cpp \
@@ -39,6 +40,7 @@ SOURCES += \
 	main.cpp
 
 HEADERS += \
+    filedownloader.h \
     theme.h \
     colorPair.h \
     xmlReader.h \

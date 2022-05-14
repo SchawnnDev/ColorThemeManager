@@ -25,6 +25,7 @@ add_executable(color_theme_manager
         src/colorPair.cpp
         src/xmlReader.cpp
         src/theme.cpp
+        src/filedownloader.cpp
 
         include/xmlReader.h
         include/colorPair.h
@@ -33,6 +34,7 @@ add_executable(color_theme_manager
         include/Widgets/themeeditor.h
         include/Widgets/colorpairitem.h
         include/theme.h
+        include/filedownloader.h
 
         ${QRC_FILES}
 

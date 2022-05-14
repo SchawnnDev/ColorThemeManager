@@ -28,6 +28,7 @@ private:
 
 signals:
     void emitThemeUpdated(const std::shared_ptr<Theme> &theme);
+    void emitStatusBarUpdate(const QString& message);
 
 private slots:
     void onThemeSelected(const std::shared_ptr<Theme>& theme);
