@@ -7,6 +7,7 @@
 #include "include/Widgets/colorpairitem.h"
 #include "include/xmlReader.h"
 #include <QDebug>
+#include <QMessageBox>
 
 ThemeEditor::ThemeEditor(QWidget *parent) :
         QWidget(parent), ui{new Ui::ThemeEditor}, m_currentTheme{}
@@ -34,7 +35,6 @@ void ThemeEditor::updateThemeDisplay()
     ui->themeEditorTitle->setText(
             "Gestion du thème : " + m_currentTheme->name());
 
-    ui->changeThemeURLBtn->setDisabled(m_currentTheme->URL().isEmpty());
     ui->saveBtn->setDisabled(m_currentTheme->saved());
 }
 
@@ -50,11 +50,11 @@ void ThemeEditor::onThemeSelected(const std::shared_ptr<Theme> &theme)
         delete ui->colorPairList->takeItem(ui->colorPairList->row(item));
     }
 
-    foreach(const std::shared_ptr<ColorPair> &colorPair,
-                theme->colorPairs())
-    {
-        addColorPairItem(colorPair);
-    }
+            foreach(const std::shared_ptr<ColorPair> &colorPair,
+                    theme->colorPairs())
+        {
+            addColorPairItem(colorPair);
+        }
 
     updateThemeDisplay();
 }
@@ -88,7 +88,6 @@ void ThemeEditor::on_changeThemeNameBtn_clicked()
     updateTheme();
 }
 
-
 void ThemeEditor::on_changeThemeIconBtn_clicked()
 {
     QString dirPath = m_currentTheme->iconPath();
@@ -113,13 +112,6 @@ void ThemeEditor::on_changeThemeIconBtn_clicked()
     updateTheme();
 }
 
-
-void ThemeEditor::on_changeThemeURLBtn_clicked()
-{
-
-}
-
-
 void ThemeEditor::on_addColorPairBtn_clicked()
 {
     auto colorPair = std::make_shared<ColorPair>();
@@ -127,7 +119,7 @@ void ThemeEditor::on_addColorPairBtn_clicked()
     colorPair->sourceColor() = QColor(0, 0, 0, 255);
     colorPair->targetColor() = QColor(0, 0, 0, 255);
 
-    m_currentTheme->colorPairs().push_back(colorPair);
+    m_currentTheme->colorPairs().push_front(colorPair);
 
     addColorPairItem(colorPair);
 }
@@ -140,6 +132,7 @@ void ThemeEditor::addColorPairItem(const std::shared_ptr<ColorPair> &colorPair)
     item->setSizeHint(themeItem->minimumSizeHint());
     widget->addItem(item);
     widget->setItemWidget(item, themeItem);
+    item->setSelected(true);
 
     connect(themeItem, SIGNAL(emitColorPairUpdated()),
             this, SLOT(updateTheme()));
@@ -152,9 +145,39 @@ void ThemeEditor::addColorPairItem(const std::shared_ptr<ColorPair> &colorPair)
     updateTheme();
 }
 
-
 void ThemeEditor::on_applyToFileBtn_clicked()
 {
+    QString fileName = QFileDialog::getOpenFileName(
+            this, "Ouvrir un fichier a convertir",
+            (QString) QStandardPaths::DocumentsLocation);
+
+    // TODO: info box?
+    if (fileName.isEmpty())
+        return;
+
+    QFile file(fileName);
+    file.open(QIODevice::ReadWrite);
+    QByteArray content = file.readAll();
+    QString contentStr(content);
+
+    int found = 0;
+
+            foreach(const std::shared_ptr<ColorPair> &colorPair,
+                    m_currentTheme->colorPairs())
+        {
+            QString source = ColorPair::toRGBA(colorPair->sourceColor());
+            QString target = ColorPair::toRGBA(colorPair->targetColor());
+            found += contentStr.count(source, Qt::CaseInsensitive);
+            contentStr.replace(source, target, Qt::CaseInsensitive);
+        }
+
+    file.seek(0);
+    file.write(contentStr.toUtf8());
+    file.close();
+
+    QMessageBox::information(this, "Success!",
+                             QString("Le thème a bien été appliqué au fichier " +
+                             fileName + ".\n%1 couleurs ont été remplacées.").arg(found));
 }
 
 
@@ -199,8 +222,8 @@ void ThemeEditor::updateTheme()
 void ThemeEditor::on_importColorPairsBtn_clicked()
 {
     QString dirPath = QFileInfo((QString)
-            QStandardPaths::DocumentsLocation)
-                    .absoluteDir().absolutePath();
+                                        QStandardPaths::DocumentsLocation)
+            .absoluteDir().absolutePath();
 
     QString fileName = QFileDialog::getOpenFileName(
             this, "Importer des paires de couleurs",

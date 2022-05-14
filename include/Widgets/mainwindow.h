@@ -31,8 +31,6 @@ private slots:
 
     void on_actionCreateTheme_triggered();
 
-    void on_actionImportThemeURL_triggered();
-
     void on_actionChargeRecentThemes_triggered();
 
     void on_actionSaveAllThemes_triggered();

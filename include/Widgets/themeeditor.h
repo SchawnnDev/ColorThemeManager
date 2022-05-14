@@ -34,7 +34,6 @@ private slots:
     void onThemeClosed(const std::shared_ptr<Theme> &theme);
     void on_changeThemeNameBtn_clicked();
     void on_changeThemeIconBtn_clicked();
-    void on_changeThemeURLBtn_clicked();
     void on_addColorPairBtn_clicked();
     void on_applyToFileBtn_clicked();
     void on_saveBtn_clicked();

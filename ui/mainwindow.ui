@@ -66,7 +66,6 @@
     </property>
     <addaction name="separator"/>
     <addaction name="actionCreateTheme"/>
-    <addaction name="actionImportThemeURL"/>
     <addaction name="actionChargeRecentThemes"/>
     <addaction name="actionSaveAllThemes"/>
    </widget>
@@ -87,11 +86,6 @@
   <action name="actionCreateTheme">
    <property name="text">
     <string>Créer un thème</string>
-   </property>
-  </action>
-  <action name="actionImportThemeURL">
-   <property name="text">
-    <string>Importer un thème par URL</string>
    </property>
   </action>
   <action name="actionChargeRecentThemes">

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>748</width>
-    <height>362</height>
+    <width>799</width>
+    <height>439</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,6 +48,18 @@
        <layout class="QVBoxLayout" name="actionsVerticalLayout">
         <item>
          <widget class="QPushButton" name="changeThemeNameBtn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
           <property name="text">
            <string>Changer le nom du thème</string>
           </property>
@@ -55,20 +67,25 @@
         </item>
         <item>
          <widget class="QPushButton" name="changeThemeIconBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
           <property name="text">
            <string>Changer l'icône du thème</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="changeThemeURLBtn">
-          <property name="text">
-           <string>Changer l'URL du thème</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <widget class="QPushButton" name="addColorPairBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
           <property name="text">
            <string>Ajouter une paire de couleurs</string>
           </property>
@@ -76,13 +93,39 @@
         </item>
         <item>
          <widget class="QPushButton" name="importColorPairsBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
           <property name="text">
            <string>Importer des paires de couleurs...</string>
           </property>
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Importer des paires de
+ couleurs par URL</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="applyToFileBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
           <property name="text">
            <string>Appliquer a un fichier...</string>
           </property>
@@ -90,6 +133,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="saveBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>40</height>
+           </size>
+          </property>
           <property name="text">
            <string>Sauvegarder</string>
           </property>

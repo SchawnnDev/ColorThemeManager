@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QStandardPaths>
+#include <QInputDialog>
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent),
@@ -85,7 +86,22 @@ void MainWindow::on_actionImportFile_triggered()
 }
 
 void MainWindow::on_actionCalculateFileTheme_triggered()
-{}
+{
+
+    QString fileName = QFileDialog::getOpenFileName(
+            this, "Ouvrir un fichier",
+            (QString)QStandardPaths::DocumentsLocation,
+            "Fichiers");
+
+    // TODO: info box?
+    if (fileName.isEmpty())
+        return;
+
+    auto theme = std::make_shared<Theme>();
+    theme->iconPath() = ":/img/new.png";
+    theme->name() = "Nouveau thème";
+
+}
 
 void MainWindow::on_actionChargeRecentThemes_triggered()
 {}
@@ -114,9 +130,6 @@ void MainWindow::on_actionCreateTheme_triggered()
 
     widget->setCurrentItem(item);
 }
-
-void MainWindow::on_actionImportThemeURL_triggered()
-{}
 
 void MainWindow::on_actionSaveAllThemes_triggered()
 {}
