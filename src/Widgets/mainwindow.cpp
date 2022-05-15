@@ -10,6 +10,7 @@
 #include <QSettings>
 #include <QDragEnterEvent>
 #include <QMimeData>
+#include <QMovie>
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent),

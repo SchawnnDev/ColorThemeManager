@@ -5,6 +5,7 @@
 #include <memory>
 #include <QListWidgetItem>
 #include "include/theme.h"
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -49,6 +50,7 @@ private:
     void dragEnterEvent(QDragEnterEvent *e) override;
 
     void dropEvent(QDropEvent *e) override;
+
 };
 
 #endif // MAINWINDOW_H
