@@ -114,6 +114,9 @@ void ThemeEditor::on_addColorPairBtn_clicked() {
     m_currentTheme->colorPairs().push_front(colorPair);
 
     addColorPairItem(colorPair);
+    updateTheme();
+
+    ui->colorPairList->scrollToBottom();
 }
 
 void ThemeEditor::on_importColorPairsURLBtn_clicked() {
@@ -157,8 +160,6 @@ void ThemeEditor::addColorPairItem(const std::shared_ptr<ColorPair> &colorPair) 
             SIGNAL(emitColorPairRemoved(const std::shared_ptr<ColorPair> &)),
             this,
             SLOT(onColorPairRemoved(const std::shared_ptr<ColorPair> &)));
-
-    updateTheme();
 }
 
 void ThemeEditor::on_applyToFileBtn_clicked() {
