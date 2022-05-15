@@ -3,5 +3,12 @@
         <file>img/new.png</file>
         <file>img/favicon.ico</file>
         <file>img/loading.gif</file>
+        <file>img/download.svg</file>
+        <file>img/edit.svg</file>
+        <file>img/file.svg</file>
+        <file>img/image.svg</file>
+        <file>img/plus-square.svg</file>
+        <file>img/save.svg</file>
+        <file>img/upload.svg</file>
     </qresource>
 </RCC>

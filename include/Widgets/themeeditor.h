@@ -5,6 +5,7 @@
 #include "include/theme.h"
 #include "include/filedownloader.h"
 #include <memory>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class ThemeEditor; }
@@ -27,6 +28,7 @@ private:
     FileDownloader* m_fileDownloader;
 
     void addColorPairItem(const std::shared_ptr<ColorPair> &colorPair);
+    static void setButtonIcon(QPushButton *btn, const QString &path);
 
 signals:
     void emitThemeUpdated(const std::shared_ptr<Theme> &theme);

@@ -11,13 +11,32 @@
 #include <QMessageBox>
 
 ThemeEditor::ThemeEditor(QWidget *parent) :
-        QWidget(parent), ui{new Ui::ThemeEditor}, m_currentTheme{} {
+        QWidget(parent), ui{new Ui::ThemeEditor}, m_currentTheme{}, m_fileDownloader{} {
     ui->setupUi(this);
     updateThemeDisplay();
+
+    // set icons on buttons
+    setButtonIcon(ui->changeThemeNameBtn, ":/img/edit.svg");
+    setButtonIcon(ui->changeThemeIconBtn, ":/img/image.svg");
+    setButtonIcon(ui->addColorPairBtn, ":/img/plus-square.svg");
+    setButtonIcon(ui->importColorPairsBtn, ":/img/upload.svg");
+    setButtonIcon(ui->importColorPairsURLBtn, ":/img/download.svg");
+    setButtonIcon(ui->applyToFileBtn, ":/img/file.svg");
+    setButtonIcon(ui->saveBtn, ":/img/save.svg");
 }
 
 ThemeEditor::~ThemeEditor() {
     delete ui;
+}
+
+void ThemeEditor::setButtonIcon(QPushButton* btn, const QString& path)
+{
+    QIcon icon(path);
+
+    if(icon.isNull())
+        return;
+
+    btn->setIcon(icon);
 }
 
 void ThemeEditor::updateThemeDisplay() {
