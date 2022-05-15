@@ -24,7 +24,6 @@ public:
     Theme(const QString& name, const QString& iconPath, const QString& path, bool URL, bool alreadyExists);
     explicit Theme(const QString& themePath);
     ~Theme();
-    void applyToFile(const QString &filePath);
     bool save(bool newPath, QWidget *parent);
 
     // Getters and setters

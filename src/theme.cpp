@@ -3,6 +3,7 @@
 #include "include/theme.h"
 #include "include/utils.h"
 #include <QDebug>
+#include <QSettings>
 
 
 Theme::Theme()
@@ -20,13 +21,6 @@ Theme::Theme(const QString &name, const QString &iconPath, const QString &path,
 
 Theme::Theme(const QString &themePath)
 {
-}
-
-void Theme::applyToFile(const QString &filePath)
-{
-
-
-
 }
 
 bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
@@ -61,7 +55,6 @@ bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
 
         QDir d = QFileInfo(fileName).absoluteDir();
 
-        // TODO: Maybe add info box dir not exists
         if(!d.exists())
         {
             Utils::displayError(QWidget::tr("Le dossier selectionné n'existe pas"), parent);
@@ -77,8 +70,20 @@ bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
     out << m_uuid << m_name << m_iconPath << m_URL << m_colorPairs;
     file.close();
 
-    m_saved = true;
+    QSettings settings;
+    QStringList files = settings.value("recentFileList").toStringList();
 
+    if(!files.contains(m_path))
+    {
+        files.insert(0, m_path);
+    } else {
+        files.removeOne(m_path);
+        files.insert(0, m_path);
+    }
+
+    settings.setValue("recentFileList", files);
+
+    m_saved = true;
     return true;
 }
 

@@ -203,7 +203,6 @@ void ThemeEditor::on_applyToFileBtn_clicked() {
 
 }
 
-
 void ThemeEditor::on_saveBtn_clicked() {
     if (m_currentTheme == Q_NULLPTR) return;
     ui->saveBtn->setDisabled(true);
@@ -236,7 +235,6 @@ void ThemeEditor::updateTheme() {
     updateThemeDisplay();
     emitThemeUpdated(m_currentTheme);
 }
-
 
 void ThemeEditor::on_importColorPairsBtn_clicked() {
     QString dirPath = QFileInfo((QString)
@@ -290,4 +288,3 @@ void ThemeEditor::onURLDownloaded() {
 
     updateTheme();
 }
-

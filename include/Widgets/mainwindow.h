@@ -41,6 +41,8 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    void addThemeItem(const std::shared_ptr<Theme> &theme);
 };
 
 #endif // MAINWINDOW_H
