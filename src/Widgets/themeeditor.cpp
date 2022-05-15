@@ -136,6 +136,8 @@ void ThemeEditor::on_importColorPairsURLBtn_clicked() {
         return;
     }
 
+    emit emitStatusBarUpdate(tr("Démarrage du téléchargement de ") + url);
+
     m_currentTheme->URL() = url;
 
     delete m_fileDownloader;
@@ -249,10 +251,14 @@ void ThemeEditor::on_importColorPairsBtn_clicked() {
     if (fileName.isEmpty())
         return;
 
+    emit emitStatusBarUpdate(tr("Démarrage de l'importation pour ")+ fileName);
+
     XMLReader::importFile(m_currentTheme, fileName);
 
     // Reload colorPairs
     onThemeSelected(m_currentTheme);
+
+    emit emitStatusBarUpdate(tr("Importation terminée"));
 
     updateTheme();
 }
@@ -260,6 +266,8 @@ void ThemeEditor::on_importColorPairsBtn_clicked() {
 void ThemeEditor::onURLDownloaded() {
     if (m_currentTheme == Q_NULLPTR) return;
     auto data = m_fileDownloader->downloadedData();
+
+    emit emitStatusBarUpdate(tr("Téléchargement effectué."));
 
     if (data.isEmpty()) {
         Utils::displayError(tr("Les données XML téléchargées sont vides."), this);
@@ -272,6 +280,8 @@ void ThemeEditor::onURLDownloaded() {
         Utils::displayError(tr("Impossible de traiter le XML"), this);
         return;
     }
+
+    emit emitStatusBarUpdate(tr("Traitement des éléments téléchargés."));
 
     XMLReader::import(m_currentTheme, doc);
 
@@ -288,4 +298,6 @@ void ThemeEditor::onURLDownloaded() {
         }
 
     updateTheme();
+
+    emit emitStatusBarUpdate(tr("Importation des elements téléchargés terminée"));
 }

@@ -37,12 +37,18 @@ private slots:
 
     void onThemeClosed(const std::shared_ptr<Theme> &theme);
 
+    void onStatusBarUpdate(const QString& message);
+
     void onCurrentItemChanged(QListWidgetItem * current, QListWidgetItem * previous);
 
 private:
     Ui::MainWindow *ui;
 
     void addThemeItem(const std::shared_ptr<Theme> &theme);
+
+    void dragEnterEvent(QDragEnterEvent *e) override;
+
+    void dropEvent(QDropEvent *e) override;
 };
 
 #endif // MAINWINDOW_H
