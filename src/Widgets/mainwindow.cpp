@@ -422,6 +422,42 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::on_actionQuitter_triggered()
 {
+    QCoreApplication::quit();
+}
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    bool canExit = true;
+    for (auto i = 0; i < ui->openThemesList->count(); ++i)
+    {
+        auto item = ui->openThemesList->item(i);
+        auto themeItem = qobject_cast<openThemeItem *>
+                (ui->openThemesList->itemWidget(item));
+        auto theme = themeItem->theme();
+
+        if (theme->saved()) continue;
+        canExit = false;
+        break;
+    }
+
+    if(canExit)
+    {
+        event->accept();
+        return;
+    }
+
+    QMessageBox msgBox(QMessageBox::NoIcon, tr("Quitter l'application"),
+                       tr("Etes-vous sûr de vouloir quitter l'application sans sauvegarder vos modifications?"),
+                       QMessageBox::Yes | QMessageBox::Cancel,
+                       this);
+    int ret = msgBox.exec();
+
+    if(ret != QMessageBox::Yes)
+    {
+        event->ignore();
+        return;
+    }
+
+    event->accept();
 }
 

@@ -140,7 +140,6 @@
     </message>
     <message>
         <location filename="../../ui/mainwindow.ui" line="141"/>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="69"/>
         <source>Français</source>
         <translation>French</translation>
     </message>
@@ -150,104 +149,113 @@
         <translation>English</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="69"/>
         <source>Anglais</source>
-        <translation>English</translation>
+        <translation type="vanished">English</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="117"/>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="163"/>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="199"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="119"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="165"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="201"/>
         <source>Le fichier sélectionné n&apos;existe pas</source>
         <translation>The selected file does not exist</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="123"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="125"/>
         <source>Importation du fichier drag-and-drop </source>
         <translation>Importing the drag-and-drop file </translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="142"/>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="284"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="144"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="286"/>
         <source>%1 thèmes ont bien été chargés.</source>
         <translation>%1 themes have been loaded.</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="152"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="154"/>
         <source>Importer un thème</source>
         <translation>Import a theme</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="154"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="156"/>
         <source>Fichiers thème (*.theme)</source>
         <translation>Theme files (*.theme)</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="167"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="169"/>
         <source>Importation du thème </source>
         <translation>Importing the theme </translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="182"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="184"/>
         <source>Le thème %1 a bien été importé.</source>
         <translation>The theme %1 has been imported.</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="189"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="191"/>
         <source>Ouvrir un fichier</source>
         <translation>Open a file</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="203"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="205"/>
         <source>Calcul du thème d&apos;un fichier pour </source>
         <translation>Calculating the theme of a file for </translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="211"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="213"/>
         <source>Nouveau thème importé</source>
         <translation>New imported theme</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="226"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="228"/>
         <source>Couleur %1</source>
         <translation>Color %1</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="236"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="238"/>
         <source>%1 couleurs ont bien été trouvées</source>
         <translation>%1 colors have been found</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="237"/>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="286"/>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="342"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="239"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="288"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="344"/>
         <source>Success!</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="249"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="251"/>
         <source>Chargement de %1 thèmes récents.</source>
         <translation>Loading %1 recent themes.</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="294"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="296"/>
         <source>Nouveau thème</source>
         <translation>New theme</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="324"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="326"/>
         <source>Sauvegarde de %1 thèmes</source>
         <translation>Saving %1 themes</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="340"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="342"/>
         <source>%1 thèmes ont bien été sauvegardés.</source>
         <translation>%1 themes have been saved.</translation>
     </message>
     <message>
-        <location filename="../../src/Widgets/mainwindow.cpp" line="403"/>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="400"/>
         <source>Impossible de charger le langage %1</source>
         <translation>Unable to load the language %1</translation>
+    </message>
+    <message>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="449"/>
+        <source>Quitter l&apos;application</source>
+        <translation>Quit the application</translation>
+    </message>
+    <message>
+        <location filename="../../src/Widgets/mainwindow.cpp" line="450"/>
+        <source>Etes-vous sûr de vouloir quitter l&apos;application sans sauvegarder vos modifications?</source>
+        <translation>Are you sure you want to leave the application without saving your changes?</translation>
     </message>
 </context>
 <context>
@@ -479,6 +487,16 @@
         <location filename="../../ui/openthemeitem.ui" line="46"/>
         <source>X</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="../../src/Widgets/openthemeitem.cpp" line="25"/>
+        <source>Sauvegarder et quitter</source>
+        <translation>Save and quit</translation>
+    </message>
+    <message>
+        <location filename="../../src/Widgets/openthemeitem.cpp" line="26"/>
+        <source>Etes-vous sûr de vouloir fermer ce thème sans le sauvegarder?</source>
+        <translation>Are you sure you want to close this theme without saving it?</translation>
     </message>
 </context>
 </TS>

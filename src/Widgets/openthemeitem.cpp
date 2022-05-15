@@ -22,8 +22,8 @@ void openThemeItem::on_themeClose_clicked()
 
     if (!m_theme->saved())
     {
-        QMessageBox msgBox(QMessageBox::NoIcon, "Sauvegarder et quitter",
-                           "Etes-vous sûr de vouloir fermer ce thème sans le sauvegarder?",
+        QMessageBox msgBox(QMessageBox::NoIcon, tr("Sauvegarder et quitter"),
+                           tr("Etes-vous sûr de vouloir fermer ce thème sans le sauvegarder?"),
                            QMessageBox::Save | QMessageBox::Discard |
                            QMessageBox::Cancel,
                            this);
