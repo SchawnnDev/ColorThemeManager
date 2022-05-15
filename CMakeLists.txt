@@ -7,7 +7,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-find_package(Qt5 COMPONENTS Widgets Xml Gui Network Core REQUIRED)
+find_package(Qt5 COMPONENTS Widgets Xml Gui Network Core LinguistTools REQUIRED)
 qt5_wrap_ui(UI_HEADERS
         ui/mainwindow.ui
         ui/openthemeitem.ui
@@ -15,6 +15,8 @@ qt5_wrap_ui(UI_HEADERS
         ui/colorpairitem.ui)
 
 qt5_add_resources(QRC_FILES assets/resources.qrc)
+qt5_add_translation(QM_FILES assets/lang/color_theme_manager_en.ts)
+
 
 add_executable(color_theme_manager
         src/main.cpp
@@ -39,7 +41,9 @@ add_executable(color_theme_manager
 
         ${QRC_FILES}
 
-        ${UI_HEADERS})
+        ${UI_HEADERS}
+
+        ${QM_FILES})
 
 target_link_libraries(color_theme_manager
         Qt5::Core Qt5::Network Qt5::Xml Qt5::Gui Qt5::Widgets

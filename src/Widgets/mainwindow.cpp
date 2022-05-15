@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
           ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    createLanguageMenu();
+
     ui->openThemesList->setDragDropMode(QAbstractItemView::InternalMove);
 
     // Drag and drop
@@ -51,6 +54,46 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::createLanguageMenu()
+{
+    QActionGroup *langGroup = new QActionGroup(ui->menuLanguage);
+    langGroup->setExclusive(true);
+
+    connect(langGroup, SIGNAL(triggered(QAction * )),
+            this, SLOT(onLanguageChanged(QAction * )));
+
+    QSettings settings;
+    QString currentLocale = settings.value("currentLocale", "fr").toString();
+
+    QStringList languages;
+    languages << "Francais" <<"Anglais";
+
+    QStringList languageCodes;
+    languageCodes << "fr" << "en";
+
+    for (int i = 0; i < languages.size(); ++i)
+    {
+        const auto &language = languages.at(i);
+        const auto &code = languageCodes.at(i);
+
+        QIcon icon(QString(":/img/lang/%1.png").arg(code));
+        QAction *action = new QAction(icon, tr(qPrintable(language)), this);
+        action->setCheckable(true);
+        action->setData(code);
+
+        ui->menuLanguage->addAction(action);
+        langGroup->addAction(action);
+
+        if (currentLocale != code)
+            continue;
+
+        action->setChecked(true);
+    }
+
+    loadLanguage(currentLocale);
+
+}
+
 void MainWindow::dragEnterEvent(QDragEnterEvent *e)
 {
     if (!e->mimeData()->hasUrls())
@@ -62,42 +105,44 @@ void MainWindow::dropEvent(QDropEvent *e)
 {
     int imported = 0;
 
-    foreach (const QUrl &url, e->mimeData()->urls())
-    {
-        QString fileName = url.toLocalFile();
-
-        if(!fileName.endsWith(".theme"))
-            continue;
-
-        QFile file(fileName);
-
-        if (!file.exists())
+            foreach (const QUrl &url, e->mimeData()->urls())
         {
-            Utils::displayError(tr("Le fichier sélectionné n'existe pas"), this);
-            continue;
+            QString fileName = url.toLocalFile();
+
+            if (!fileName.endsWith(".theme"))
+                continue;
+
+            QFile file(fileName);
+
+            if (!file.exists())
+            {
+                Utils::displayError(tr("Le fichier sélectionné n'existe pas"),
+                                    this);
+                continue;
+            }
+
+            onStatusBarUpdate(
+                    tr("Importation du fichier drag-and-drop ") + fileName);
+
+            file.open(QIODevice::ReadOnly);
+            QDataStream in(&file);
+
+            auto theme = std::make_shared<Theme>();
+            in >> theme->uuid() >> theme->name() >> theme->iconPath()
+               >> theme->URL()
+               >> theme->colorPairs();
+            // Close file
+            file.close();
+
+            theme->saved() = true;
+            theme->path() = fileName;
+
+            addThemeItem(theme);
+            ++imported;
         }
 
-        onStatusBarUpdate(tr("Importation du fichier drag-and-drop ") + fileName);
-
-        file.open(QIODevice::ReadOnly);
-        QDataStream in(&file);
-
-        auto theme = std::make_shared<Theme>();
-        in >> theme->uuid() >> theme->name() >> theme->iconPath() >> theme->URL()
-           >> theme->colorPairs();
-        // Close file
-        file.close();
-
-        theme->saved() = true;
-        theme->path() = fileName;
-
-        addThemeItem(theme);
-        ++imported;
-    }
-
-    QString msg = QString("%1 ").arg(imported) +
-                  tr("thèmes ont bien été chargés.");
-    QMessageBox::information(this, "Success!",msg);
+    QString msg = tr("%1 thèmes ont bien été chargés.").arg(imported);
+    QMessageBox::information(this, "Success!", msg);
     onStatusBarUpdate(msg);
 }
 
@@ -106,9 +151,9 @@ void MainWindow::on_actionImportFile_triggered()
 
     QDir dir = QDir((QString) QStandardPaths::DocumentsLocation);
     QString fileName = QFileDialog::getOpenFileName(
-            this, "Importer un thème",
+            this, tr("Importer un thème"),
             dir.filePath("theme.theme"),
-            "Fichiers thème (*.theme)");
+            tr("Fichiers thème (*.theme)"));
 
     if (fileName.isEmpty())
         return;
@@ -136,14 +181,14 @@ void MainWindow::on_actionImportFile_triggered()
     theme->path() = fileName;
 
     addThemeItem(theme);
-    onStatusBarUpdate(tr("Le thème ") + theme->name() + tr(" a bien été importé."));
+    onStatusBarUpdate(tr("Le thème %1 a bien été importé.").arg(theme->name()));
 }
 
 void MainWindow::on_actionCalculateFileTheme_triggered()
 {
 
     QString fileName = QFileDialog::getOpenFileName(
-            this, "Ouvrir un fichier",
+            this, tr("Ouvrir un fichier"),
             (QString) QStandardPaths::DocumentsLocation);
 
     if (fileName.isEmpty())
@@ -165,7 +210,7 @@ void MainWindow::on_actionCalculateFileTheme_triggered()
 
     auto theme = std::make_shared<Theme>();
     theme->iconPath() = ":/img/new.png";
-    theme->name() = "Nouveau thème importé";
+    theme->name() = tr("Nouveau thème importé");
 
     // HEX
     QRegularExpression regex(
@@ -180,7 +225,7 @@ void MainWindow::on_actionCalculateFileTheme_triggered()
         QString captured = match.captured();
 
         auto colorPair = std::make_shared<ColorPair>();
-        colorPair->name() = QString("Couleur %1").arg(j++);
+        colorPair->name() = tr("Couleur %1").arg(j++);
         colorPair->sourceColor() = ColorPair::fromRGBA(captured);
         colorPair->targetColor() = QColor(0, 0, 0, 255);
 
@@ -190,9 +235,8 @@ void MainWindow::on_actionCalculateFileTheme_triggered()
 
     addThemeItem(theme);
 
-    QString msg = QString("%1 ").arg(j) +
-                  tr("couleurs ont bien été trouvées");
-    QMessageBox::information(this, "Success!",msg);
+    QString msg = tr("%1 couleurs ont bien été trouvées").arg(j);
+    QMessageBox::information(this, tr("Success!"), msg);
     onStatusBarUpdate(msg);
 }
 
@@ -203,46 +247,45 @@ void MainWindow::on_actionChargeRecentThemes_triggered()
     QStringList filesCopy = files;
     int loaded = 0;
 
-    onStatusBarUpdate(QString(tr("Chargement de") + " %1 " + tr("thèmes récents.")).arg(files.length()));
+    onStatusBarUpdate(
+            tr("Chargement de %1 thèmes récents.").arg(files.length()));
 
-    foreach(QString filePath, filesCopy)
-    {
-        QFileInfo info(filePath);
-
-        if (!info.exists() || !info.isFile())
+            foreach(QString filePath, filesCopy)
         {
-            files.removeOne(filePath);
-            continue;
+            QFileInfo info(filePath);
+
+            if (!info.exists() || !info.isFile())
+            {
+                files.removeOne(filePath);
+                continue;
+            }
+
+            QFile file(filePath);
+
+            file.open(QIODevice::ReadOnly);
+            QDataStream in(&file);
+
+            auto theme = std::make_shared<Theme>();
+            in >> theme->uuid() >> theme->name() >> theme->iconPath()
+               >> theme->URL() >> theme->colorPairs();
+            // Close file
+            file.close();
+
+            theme->saved() = true;
+            theme->path() = filePath;
+
+            addThemeItem(theme);
+
+            // import theme
+            ++loaded;
         }
-
-        QFile file(filePath);
-
-        file.open(QIODevice::ReadOnly);
-        QDataStream in(&file);
-
-        auto theme = std::make_shared<Theme>();
-        in >> theme->uuid() >> theme->name() >> theme->iconPath()
-           >> theme->URL() >> theme->colorPairs();
-        // Close file
-        file.close();
-
-        theme->saved() = true;
-        theme->path() = filePath;
-
-        addThemeItem(theme);
-
-        // import theme
-        ++loaded;
-    }
 
     // update files
     settings.setValue("recentFileList", files);
 
-    QString msg =QString("%1 ").arg(loaded) +
-                 tr("thèmes ont bien été chargés.");
+    QString msg = tr("%1 thèmes ont bien été chargés.").arg(loaded);
 
-    QMessageBox::information(this, "Success!",
-                             msg);
+    QMessageBox::information(this, tr("Success!"), msg);
     onStatusBarUpdate(msg);
 }
 
@@ -250,7 +293,7 @@ void MainWindow::on_actionCreateTheme_triggered()
 {
     auto theme = std::make_shared<Theme>();
     theme->iconPath() = ":/img/new.png";
-    theme->name() = "Nouveau thème";
+    theme->name() = tr("Nouveau thème");
     addThemeItem(theme);
 }
 
@@ -279,7 +322,8 @@ void MainWindow::on_actionSaveAllThemes_triggered()
 {
     int saved = 0;
 
-    onStatusBarUpdate(tr("Sauvegarde de") + QString(" %1 ").arg(ui->openThemesList->count()) + tr("thèmes."));
+    onStatusBarUpdate(
+            tr("Sauvegarde de %1 thèmes").arg(ui->openThemesList->count()));
 
     for (auto i = 0; i < ui->openThemesList->count(); ++i)
     {
@@ -295,11 +339,9 @@ void MainWindow::on_actionSaveAllThemes_triggered()
         ++saved;
     }
 
-    QString msg = QString("%1 ").arg(saved) +
-                  tr("thèmes ont bien été sauvegardés.");
+    QString msg = tr("%1 thèmes ont bien été sauvegardés.").arg(saved);
 
-    QMessageBox::information(this, "Success!",
-                             msg);
+    QMessageBox::information(this, tr("Success!"), msg);
     onStatusBarUpdate(msg);
 }
 
@@ -336,3 +378,50 @@ void MainWindow::onStatusBarUpdate(const QString &message)
 {
     ui->statusBar->showMessage(message, 2000);
 }
+
+void MainWindow::loadLanguage(const QString& code)
+{
+    QSettings settings;
+    // fr or en
+
+    // remove the old translator
+    qApp->removeTranslator(&m_translator);
+
+    if(code == "fr")
+    {
+        settings.setValue("currentLocale", "fr");
+        return;
+    }
+
+    // load the new translator
+    bool result = m_translator.load(QString(":/lang/color_theme_manager_%1.qm").arg(code));
+
+    if(!result) {
+        Utils::displayError(tr("Impossible de charger le langage %1").arg(code));
+        return;
+    }
+
+    settings.setValue("currentLocale", code);
+    qApp->installTranslator(&m_translator);
+}
+
+void MainWindow::onLanguageChanged(QAction *action)
+{
+    if (action == Q_NULLPTR) return;
+
+    QString code = action->data().toString();
+    loadLanguage(code);
+}
+
+void MainWindow::changeEvent(QEvent *event)
+{
+    if(event != Q_NULLPTR && event->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+    QMainWindow::changeEvent(event);
+}
+
+void MainWindow::on_actionQuitter_triggered()
+{
+
+}
+

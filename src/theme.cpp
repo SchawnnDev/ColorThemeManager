@@ -39,9 +39,9 @@ bool Theme::save(bool newPath, QWidget *parent = Q_NULLPTR)
         }
 
         QString fileName = QFileDialog::getSaveFileName(
-                parent, "Sauvegarder le fichier",
+                parent, QWidget::tr("Sauvegarder le fichier"),
                 dir.filePath(QString("%1.theme").arg(m_name)),
-                "Fichiers thèmes (*.theme)");
+                QWidget::tr("Fichiers thèmes (*.theme)"));
 
         // Cancel => save failed
         if (fileName.isEmpty())

@@ -1,4 +1,5 @@
 #include "include/xmlReader.h"
+#include "include/utils.h"
 
 void XMLReader::importFile(const std::shared_ptr<Theme> &theme, const QString &path)
 {
@@ -7,7 +8,7 @@ void XMLReader::importFile(const std::shared_ptr<Theme> &theme, const QString &p
 
     if (!xmlFile.open(QIODevice::ReadOnly))
     {
-        qDebug() << "erreur";
+        Utils::displayError(QWidget::tr("Impossible d'ouvrir le fichier %1").arg(path));
         return;
     }
 

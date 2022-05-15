@@ -57,6 +57,7 @@ FORMS += \
         colorpairitem.ui
 
 RESOURCES = ./assets/resources.qrc
+TRANSLATIONS = ./assets/lang/color_theme_manager_en.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

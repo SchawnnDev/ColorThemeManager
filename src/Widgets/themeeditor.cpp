@@ -50,7 +50,7 @@ void ThemeEditor::updateThemeDisplay() {
     if (!display) return;
     // display => set new infos
     ui->themeEditorTitle->setText(
-            "Gestion du thème : " + m_currentTheme->name());
+            tr("Gestion du thème : %1").arg(m_currentTheme->name()));
 
     ui->saveBtn->setDisabled(m_currentTheme->saved());
 }
@@ -100,7 +100,7 @@ void ThemeEditor::on_changeThemeNameBtn_clicked() {
 
     m_currentTheme->name() = text;
     ui->themeEditorTitle->setText(
-            "Gestion du thème : " + m_currentTheme->name());
+            tr("Gestion du thème : %1").arg(m_currentTheme->name()));
     updateTheme();
 }
 
@@ -114,8 +114,8 @@ void ThemeEditor::on_changeThemeIconBtn_clicked() {
     }
 
     QString fileName = QFileDialog::getOpenFileName(
-            this, "Ouvrir un fichier",
-            dirPath, "Fichiers png (*.png)");
+            this, tr("Ouvrir un fichier"),
+            dirPath, tr("Fichiers png (*.png)"));
 
     if (fileName.isEmpty())
         return;
@@ -126,7 +126,7 @@ void ThemeEditor::on_changeThemeIconBtn_clicked() {
 
 void ThemeEditor::on_addColorPairBtn_clicked() {
     auto colorPair = std::make_shared<ColorPair>();
-    colorPair->name() = "Nouvelle couleur";
+    colorPair->name() = tr("Nouvelle couleur");
     colorPair->sourceColor() = QColor(0, 0, 0, 255);
     colorPair->targetColor() = QColor(0, 0, 0, 255);
 
@@ -155,7 +155,7 @@ void ThemeEditor::on_importColorPairsURLBtn_clicked() {
         return;
     }
 
-    emit emitStatusBarUpdate(tr("Démarrage du téléchargement de ") + url);
+    emit emitStatusBarUpdate(tr("Démarrage du téléchargement de %1").arg(url));
 
     m_currentTheme->URL() = url;
 
@@ -219,9 +219,8 @@ void ThemeEditor::on_applyToFileBtn_clicked() {
     file.close();
 
     QMessageBox::information(this, "Success!",
-                             QString("Le thème a bien été appliqué au fichier " +
-                                     fileName + ".\n%1 couleurs ont été remplacées.").arg(found));
-    emit emitStatusBarUpdate(QString("%1 " + tr("couleurs ont été remplacées.")).arg(found));
+                             QString("Le thème a bien été appliqué au fichier %1.\n%2 couleurs ont été remplacées.").arg(fileName,found));
+    emit emitStatusBarUpdate(tr("%1 couleurs ont été remplacées.").arg(found));
 
 }
 
@@ -264,13 +263,13 @@ void ThemeEditor::on_importColorPairsBtn_clicked() {
             .absoluteDir().absolutePath();
 
     QString fileName = QFileDialog::getOpenFileName(
-            this, "Importer des paires de couleurs",
-            dirPath, "Fichiers xml (*.xml)");
+            this, tr("Importer des paires de couleurs"),
+            dirPath, tr("Fichiers xml (*.xml)"));
 
     if (fileName.isEmpty())
         return;
 
-    emit emitStatusBarUpdate(tr("Démarrage de l'importation pour ")+ fileName);
+    emit emitStatusBarUpdate(tr("Démarrage de l'importation pour %1").arg(fileName));
 
     XMLReader::importFile(m_currentTheme, fileName);
 
@@ -319,4 +318,11 @@ void ThemeEditor::onURLDownloaded() {
     updateTheme();
 
     emit emitStatusBarUpdate(tr("Importation des elements téléchargés terminée"));
+}
+
+void ThemeEditor::changeEvent(QEvent *event)
+{
+    if(event != Q_NULLPTR && event->type() == QEvent::LanguageChange)
+        ui->retranslateUi(this);
+    QWidget::changeEvent(event);
 }

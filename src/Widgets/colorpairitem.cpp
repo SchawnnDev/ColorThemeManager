@@ -89,8 +89,8 @@ void ColorPairItem::on_targetColor_clicked()
 
 void ColorPairItem::on_closeBtn_clicked()
 {
-    QMessageBox msgBox(QMessageBox::NoIcon, "Suppresion paire de couleurs",
-                       "Etes-vous sûr de vouloir supprimer cette paire de couleurs ?",
+    QMessageBox msgBox(QMessageBox::NoIcon, tr("Suppresion paire de couleurs"),
+                       tr("Etes-vous sûr de vouloir supprimer cette paire de couleurs ?"),
                        QMessageBox::Yes | QMessageBox::Cancel, this);
     int ret = msgBox.exec();
 

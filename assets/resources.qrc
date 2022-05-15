@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>img/new.png</file>
         <file>img/favicon.ico</file>
-        <file>img/loading.gif</file>
         <file>img/download.svg</file>
         <file>img/edit.svg</file>
         <file>img/file.svg</file>
@@ -10,5 +9,10 @@
         <file>img/plus-square.svg</file>
         <file>img/save.svg</file>
         <file>img/upload.svg</file>
+
+        <file>img/lang/fr.png</file>
+        <file>img/lang/en.png</file>
+
+        <file>lang/color_theme_manager_en.qm</file>
     </qresource>
 </RCC>

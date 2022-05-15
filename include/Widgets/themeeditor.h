@@ -28,6 +28,7 @@ private:
     FileDownloader* m_fileDownloader;
 
     void addColorPairItem(const std::shared_ptr<ColorPair> &colorPair);
+    void changeEvent(QEvent *event) override;
     static void setButtonIcon(QPushButton *btn, const QString &path);
 
 signals:

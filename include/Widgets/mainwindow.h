@@ -6,6 +6,7 @@
 #include <QListWidgetItem>
 #include "include/theme.h"
 #include <QLabel>
+#include <QTranslator>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -38,12 +39,20 @@ private slots:
 
     void onThemeClosed(const std::shared_ptr<Theme> &theme);
 
-    void onStatusBarUpdate(const QString& message);
+    void onStatusBarUpdate(const QString &message);
 
-    void onCurrentItemChanged(QListWidgetItem * current, QListWidgetItem * previous);
+    void
+    onCurrentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+
+    void onLanguageChanged(QAction *action);
+
+    void createLanguageMenu();
+
+    void on_actionQuitter_triggered();
 
 private:
     Ui::MainWindow *ui;
+    QTranslator m_translator;
 
     void addThemeItem(const std::shared_ptr<Theme> &theme);
 
@@ -51,6 +60,9 @@ private:
 
     void dropEvent(QDropEvent *e) override;
 
+    void changeEvent(QEvent *event) override;
+
+    void loadLanguage(const QString &code);
 };
 
 #endif // MAINWINDOW_H

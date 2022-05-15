@@ -42,6 +42,7 @@
     </item>
    </layout>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -69,10 +70,15 @@
     <addaction name="actionChargeRecentThemes"/>
     <addaction name="actionSaveAllThemes"/>
    </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>Langage</string>
+    </property>
+   </widget>
    <addaction name="menuFichier"/>
    <addaction name="menuTh_me"/>
+   <addaction name="menuLanguage"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
   <action name="actionImportFile">
    <property name="icon">
     <iconset theme=":/img/file.svg"/>
@@ -122,6 +128,25 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
+   </property>
+  </action>
+  <action name="actionFran_ais">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Français</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>English</string>
    </property>
   </action>
  </widget>
