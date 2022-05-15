@@ -64,7 +64,8 @@ Toutes les fonctionnalités demandées ont été implémentées.
 
 ## Fonctionnalités non implémentées
 
-- Niveau 9 tout sauf la traduction
+- Niveau 9 tout sauf la traduction et (Faites en sorte de traiter de fac¸on optimale le cas ou un th ` eme import ` e a le m ´ eme nom qu’un ˆ
+  theme existant)
 
 ## Bugs
 
